@@ -1,0 +1,430 @@
+---
+# Green_Teams ----
+# Written by Chris Snyder, MPH (Roqarr)
+# Written for the Montclair State University PSEG Institute for Sustainability Studies
+# Documentation ----
+# This is the RMD script for powerpoint document generation
+# Arguments ----
+# Defines the parameters to pass into the Rmd document for knitting.
+# Parameters allow you to pass arguments into the Rmd document, similar to a function, to create dynamic reports.
+# Similar to a function, you must define the parameters at the beginning of the report, and can assign default values.
+# These parameters can be accessed inside the Rmd document using a special environment object: 'params'
+# The 'params' object is a special read-only environment object.
+# Each of the parameters lsited below, can be accesed as vectors of 'params', using `params$value`
+params:
+ state: "New Jersey"
+ university: "Montclair State University"
+ program: "Green Teams"
+ contact: "snyderc@montclair.edu"
+ name: "Chris Snyder"
+# Returns ----
+# na
+
+# The Title of the Document. Accepts Multiple Lines and Images, when preceeded by the '|', the pipe character.
+# By default, this is centered. 
+title: | 
+   Introduction to R
+    
+ 
+# The Subtitle of the Document. Accepts Multiple Lines and Images, when preceeded by the '|', the pipe character.
+subtitle: |
+ How to get started using the  
+ R Statistical Programming Language
+
+# The List of Authors, separated by a new line and preceeded by a '-' and a space
+# Authors will be placed on a line, and automatically centered
+# Notes about the authors, as footnotes, can be added with '^[]', with the contents of the footnote placed inside of the brackets.
+author: 
+  - Chris Snyder, MPH
+
+# Date; Use Pipe to allow multiple lines or inline R code.
+# R code can be accepted in most arguments using the backtick / backquote character '`' (located above the tab key).
+# This example will use an R function to pull the current date, and add it to the document as the entry for the date.
+# You could alternatively write in text for a fixed Year, Semester, Quarter, etc.
+date: |
+  Green Teams, 
+  `r format(Sys.Date(), "%Y")`
+
+# The abstract block of text, located below the authors / date
+# abstract: |
+#  Here is placeholder abstract Text.
+#  It can have multiple lines, and should be limited to a brief description of the paper, if you choose to add one.
+
+# Table of Contents Settings
+# Do you want to add a Table of Contents? True or False
+toc: True
+# The Defined Title of the Table of Contents
+# You can specify a title for the Table of Contents here. The example asserts that the toc is called 'Table of Contents'.
+toc-title: "Table of Contents"
+# The Defined depth of headers to include in the Table of Contents. 
+# This value impacts the TOC and Sidebar Navigation in PDF views.
+# Provide a number of how many headings / subheadings you want to have presented in the Table of Contents.
+# This example will show Headings (1) and Sub-Headings (2), but will not display any section headings at 3 or below.
+toc-depth: 2
+# Do you want to add a Table of Figures? True or False
+# This will add a separate table, listing all of the defined figures. 
+# Recommended to keep False
+lof: False 
+# Do you want to add a Table of Tables? True or False
+# This will add a separate table, listing all of the defined tables. 
+# Recommended to keep False
+lot: False 
+
+# Defines the output file format of the document that will be made by this Rmd file.
+# This example provides the three most common document types: PDF, Word, and Web (HTML).
+# There are additional potential formats for presentations, powerpoints, etc.
+# This example is formatted for a PDF output. 
+# Please note, the document format may impact what code or outputs can be accepted inside the Rmd file.
+# output: powerpoint_presentation
+# The Reference Document is provided
+output: 
+  powerpoint_presentation:
+    reference_doc: Parallax_Blue.pptx
+
+# output: pdf_document
+# output: word_document
+# output: html_document
+
+
+
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{wrapfig}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+  - \usepackage{xcolor}
+
+---
+
+# Goals
+
+By the end of the Presentation, we will have learned:
+
+- What R and RStudio are and are not
+- How to download, install, and run R and RStudio
+- How to install and load new R packages
+- How to start performing math operations in R
+- How to start graphing data in R
+
+
+# What is R?
+
+:::::: {.columns}
+::: {.column}
+![R Logo](./Assets/Logos/Rlogo.png){}
+:::
+
+::: {.column}
+- High level, interpreted, programming language
+- Designed specifically for statistics and data science
+- Functionality is expanded by the R community (*via packages*) and by the user (*via user-defined functions*)
+:::
+::::::
+
+# What is RStudio?
+
+:::::: {.columns}
+::: {.column}
+![RStudio Logo](./Assets/Logos/RStudiologocrop.png){}
+:::
+
+::: {.column}
+- Interactive Development Environment, software designed to make using R much easier
+- Tool to help manage R projects, packages, and environments
+
+
+:::
+::::::
+
+# What is the difference?
+
+:::::: {.columns}
+::: {.column}
+R
+
+- Programming Language and Interpreter
+- Prerequisite for RStudio
+
+:::
+
+::: {.column}
+RStudio
+
+- Interactive Development Environment
+- Provides a Graphical User Interface and project management tools.
+
+:::
+::::::
+
+# So what can R do for my project?
+
+![](./Assets/Logos/Rlogo.png)
+
+# Sort and Tabulate Data
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# This chunk uses some examples from the mtcars dataset. 
+# This dataset is pre-loaded into R, and is commonly used as an example data set for statistical tests and graphing.
+# However, this data frame has the row names assigned as the make and model of the automobile, as we will see in the Table section below.
+# This code will create a new data frame, removing the row names, and will add a vector of those names instead, which we can work with much easier.
+kmtcars = mtcars # Make a copy of mtcars to process
+kmtcars$model = rownames(mtcars) # Add a vector of data
+rownames(kmtcars) = NULL
+kmtcars = kmtcars %>% select(model, everything())
+
+# Subset the data frame, choosing only the following columns.
+# The example below includes both the functional and piped forms of this code, which behave the same.
+
+# Functional Example
+skmtcars = select(kmtcars,
+                  model, 
+                  mpg,
+                  cyl,
+                  disp,
+                  hp
+                  )
+
+# Order the data frame in decreasing order of MPG
+# Assign the order of the data frame to be in descending order of MPG. 
+# In case of a tie, the first column value is used as a tie-breaker (i.e., is sorted alphabetically).
+skmtcars = skmtcars[order(skmtcars$mpg, decreasing = T),] 
+skmtcars = skmtcars[skmtcars$cyl==4,] # Subset the data frame, to only include
+skmtcars = head(skmtcars)
+rownames(skmtcars) = NULL # Reset the row numbers, otherwise, they will appear as a new column in our table.
+
+kbl(skmtcars, # The data frame to print
+  booktabs = T, # Use the booktabs package, loaded in the YAML section. This is generally recommended.
+  escape = F, # This time the escape is F, because we want to process some escape characters; i.e., the '\n' used in our line breaks for our multi-row column names.
+  longtable = T, # Use the longtable package, loaded in the YAML section. This supports tables that are long, supports tables that can wrap across pages. It also centers the table on the page. This is generally recommended.
+  format = "pipe", # The document format. For this example, it is a pdf document, which uses LaTeX to render, so our format is latex.
+  linesep = "", # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
+  col.names = linebreak(c("Make and Model", 
+                          "Miles per Gallon",
+                          "Number of Cylinders",
+                          "Displacement in Cubic Inches",
+                          "Gross Horsepower"
+                          ),
+                        align = c("l", 
+                                  "c",
+                                  "c",
+                                  "c",
+                                  "c"
+                                  )
+                        ),
+  align = c("l",
+            "c",
+            "c",
+            "c",
+            "c",
+            "c"
+            ), caption = "Top Six Fuel Efficient  4-Cylinder Engines"
+  )
+
+
+# kable(mtcars, format = "pipe")
+
+```
+
+
+# Plot Descriptive Statistics
+
+:::::: {.columns}
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(mtcars, mapping = aes(x = mpg, y = hp)) + 
+  geom_point() +
+  labs(x = "Miles per Gallon", 
+       y = "Horsepower", 
+       title = "Fuel Economy and Performance", # The Bolded Graph Title
+       subtitle = "Scatterplot of Fuel Efficiency Compared to Engine Performance " # The Graph Subtitle
+      ) +
+  # scale_y_continuous(labels = comma) +
+  # scale_x_continuous(labels = comma) +
+        theme(plot.title = element_text(hjust = 0.5), # centers the title
+              plot.subtitle = element_text(hjust = 0.5), # centers the subtitle
+              panel.background = element_blank(), # Removes greyscale background
+              axis.line = element_line() # Adds black line border to x and y axis
+      )
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(mtcars, mapping = aes(x = as.factor(cyl))) + 
+  geom_bar() +
+  labs(x = "Engine Cylinders", 
+       y = "Number of Automobiles Recorded", 
+       title = "Cylinders in Automobile Engines", # The Bolded Graph Title
+       subtitle = "Bar Chart of the Engine Atributes of Vehicles Sampled" # The Graph Subtitle
+      ) +
+  # scale_y_continuous(labels = comma) +
+  # scale_x_continuous(labels = comma) +
+        theme(plot.title = element_text(hjust = 0.5), # centers the title
+              plot.subtitle = element_text(hjust = 0.5), # centers the subtitle
+              panel.background = element_blank(), # Removes greyscale background
+              axis.line = element_line() # Adds black line border to x and y axis
+      )
+```
+:::
+::::::
+
+# Plot Statistical Tests 
+
+:::::: {.columns}
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggscatter(mtcars,
+          "mpg",
+          "hp", 
+          title = "Correlation Plot of \nFuel Economy by Performance", 
+          xlab = "Miles per Gallon",
+          ylab = "Horsepower",
+          add = "reg.line", 
+          conf.int = T,
+          cor.coef = T
+          )
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggboxplot(mtcars, 
+          "am",
+          "mpg", 
+          title = "Boxplot of Fuel Economy by Transmission Type", 
+          xlab = "Engine Transmission Type", 
+          ylab = "Miles per Gallon" 
+          )
+
+
+```
+:::
+::::::
+
+
+# Plot Principal Component Analysis
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+mtcars.pca = prcomp(mtcars[,c(1:7,10,11)], 
+                    center = T,
+                    scale. = T)
+mtcars.country <- c(rep("Japan", 3), rep("US",4), rep("Europe", 7),rep("US",3), "Europe", rep("Japan", 3), rep("US",4), rep("Europe", 3), "US", rep("Europe", 3))
+ggbiplot(mtcars.pca, 
+         choices = 1:2,
+         # labels = rownames(mtcars),
+         groups = mtcars.country,
+         ellipse = T,
+         var.axes = F
+) + 
+  labs(title = "Principal Component Analysis \nof Automobile Atributes", # The Bolded Graph Title
+       subtitle = "PCA of 32 Sampled Automobiles, with 9 Principle Components" # The Graph Subtitle
+       ) +
+  # scale_y_continuous(labels = comma) +
+  # scale_x_continuous(labels = comma) +
+        theme(plot.title = element_text(hjust = 0.5), # centers the title
+              plot.subtitle = element_text(hjust = 0.5), # centers the subtitle
+              panel.background = element_blank(), # Removes greyscale background
+              axis.line = element_line() # Adds black line border to x and y axis
+      )
+```
+
+
+# Map Choropleth and Geo-spatial Data
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data(World, metro, rivers, land)
+
+##
+#
+m1 = tm_shape(World[World$continent %in% c("South America", "North America"),]) +
+  tm_polygons("life_exp", 
+              title = "Years") + 
+  tm_legend(legend.outside = T,
+            legend.outside.position = "right",
+            hist.width=1,
+            hist.height=.25, 
+            hist.bg.color="gray60", 
+            hist.bg.alpha=.5) +
+  tm_layout(frame = F,
+            main.title = "Life Expectency in North America",
+            main.title.position = "center",
+            main.title.size = 1
+  )
+
+
+
+##
+m2 = tm_shape(land) +
+  tm_raster("elevation", 
+            palette = terrain.colors(10), 
+            title = "Elevation",
+            ) +
+  tm_legend(legend.outside = T,
+            legend.outside.position = "right",
+            hist.width=1,
+            hist.height=.25, 
+            hist.bg.color="gray60", 
+            hist.bg.alpha=.5) +
+  tm_layout(frame = F,
+            main.title = "Global Elevation Above Sea Level",
+            main.title.position = "center",
+            main.title.size = 1
+            )  
+
+tmap_mode("plot")
+tmap_arrange(m1, m2)
+```
+
+
+# Render Documents
+
+:::::: {.columns}
+::: {.column}
+![](./Assets/Images/ppt.png)
+:::
+
+::: {.column}
+This presentation was created in R!
+It is created using R Markdown. 
+This combines Markdown formatting and R code.
+Using this, we can make tables and graphs quickly,
+without worrying about document formatting!
+:::
+::::::
+
+# Lets Get Started Using R
+
+:::::: {.columns}
+::: {.column}
+
+![](./Assets/Images/RStudioTerm.png)
+
+:::
+
+::: {.column}
+
+This is the first guided lab section, and will act as a quick introduction to how to begin using R and its Interactive Development Environment (IDE) RStudio.
+
+Launch RStudio now if you have not done so already. You should see a screen similar to the one below.
+
+:::
+::::::
+
+# Goals
+
+At the end of the Lab, we have learned:
+
+- What R and RStudio are and are not
+- How to download, install, and run R and RStudio
+- How to install and load new R packages
+- How to start performing math operations in R
+- How to start graphing data in R
+

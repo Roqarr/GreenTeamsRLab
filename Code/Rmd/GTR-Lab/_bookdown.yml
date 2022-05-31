@@ -1,0 +1,7 @@
+book_filename: "gtr-lab"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: ""
+    # chapter_name: "Section "
+#output_dir: "docs"

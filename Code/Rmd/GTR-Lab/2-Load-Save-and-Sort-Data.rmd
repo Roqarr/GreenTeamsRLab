@@ -1,0 +1,496 @@
+# Working with Data {#data}
+
+## Goals
+
+By the end of the Presentation, we will have learned:
+
+- How to load data from a variety of local formats
+- How to load data from a remote source
+- How to identify common types of data inside of R
+- How to add, remove, sort, and filter the data
+- How to save data to a variety of local formats
+
+
+
+## What Data Formats can R Use?
+
+- Base R supports reading data from plain text files (.txt) and comma-separated tables (.csv), and compressed RData files
+- `readxl` supports Excel (.xls, .xlsx)
+- `foreign` supports SAS, SPSS, and dBase (.dbf)
+- `RCurl` supports URL, HTTP, FTP
+- `jsonlite` supports JSON
+- `shapefiles` supports ESRI shapefiles (.shp, .shx, .dbf)
+
+## Getting our Data Table Ready to Use in R
+
+:::::: {.columns}
+::: {.column}
+Table Headers
+
+- The first row of your data table
+- Names should start with a character
+- Names must be unique, or will be iterated
+- Names should be descriptive or unique IDs
+- Names should avoid iterative counting (Q1, Q2, Q3, ...)
+
+:::
+
+::: {.column}
+Table Contents
+
+- Every row after the first is read as your data
+- Remove any test data, total rows, or metadata before importing
+- Remove empty rows, columns, and table formatting
+- Any missing cell becomes a value of `NA`
+
+:::
+::::::
+
+## What format is our Data?
+
+What file type is our data stored in?
+
+- Identify the file type from the file extension. You may need to turn file extensions on in your file explorer (Windows Explorer, Finder, etc)
+- Check the list of installed packages in R, or CRAN, for a package that can read the file format, or install any new packages that can read that file format, if missing
+- Load the required package(s) using  `library()`
+
+## Where is our Data Located?
+
+Where are the data saved to? Data can be on local, removable, or networked locations.
+
+- Files should be kept in a permanent location whenever possible
+- Ideally, we will use a relative file path, inside the project:  
+(`"./my_folder/my_file"`)
+- We can also use an absolute file path, within the local file system:  
+(`"C:/Users/my_user/my_folder/my_file"`)
+- We can use a URL path, for data available on a networked file system:  
+(`"https://www.MyWebsite.com/myPage/my_file.csv"`)
+
+
+## Loading our Data Table into R
+
+Load the required package(s), and read in the data.
+
+- `read.csv("./Data/my_file.csv")`
+- `library(readxl)`  
+`read_excel("./Data/my_file.xlsx")`
+- `load("./Data/my_data.Rdata")`
+
+
+## Assigning Data to Objects in R
+
+R can store any form of data as an `object` within the R environment.
+R objects will most frequently be stored in the `global environment`.
+Objects are assigned using the assignment operators: `=` or `<-`. Both operators will generally behave the same.
+
+- `my_csv = read.csv("./Data/my_file.csv")`
+- `my_xlsx <- read_excel("./Data/my_file.xlsx")`
+
+
+## Different Types of Data In R
+
+All `objects` inside of R will be of a specific `class`. Common data `class` are listed below.
+
+- Data Frame:  
+A 2-dimensional table, storing multiple types of data
+- List:  
+A 1-dimensional list, storing multiple types of data
+- Vector:  
+A 1-dimensional list, storing only data of the same type
+
+
+## Different Types of Data In R
+
+All `objects` inside of R will be of a specific `type`. Common data `types` are listed below.
+
+- Numeric: `.5`, `1`, `1.5`
+- Integer: `1`, `2`, `3`
+- Character: `"Anything in Quotes"`, `"1"`
+- Logical: `TRUE`, `FALSE`
+- Factor: `Strongly Disagree`, `Disagree`, `Agree`, `Strongly Agree`
+
+
+## Viewing Data in R
+
+Any object can be viewed by referencing it in the R terminal.  
+For example: `mtcars` will print the mtcars data frame inside of the console.
+
+The `View()` function is used to display objects in a separate tab. If using `View()` inside of R, you will receive a new pop-up window with your requested object. If using `View()` inside of RStudio, you will receive a new tab within your RStudio session.  
+For example: `View(mtcars)` will open the data frame inside of a new tab. We will be using the `mtcars` data set in this presentation.
+Note that `View()` is one of the few functions in R that begins with capitalization.
+
+# Data Lab {#data-lab}
+
+## Example Data Set `mtcars`
+
+Like in the introduction lab, we will be using the `mtcars` data set to learn how to process data in R.
+Below is an excerpt of mtcars, displaying the first 6 cars in the list. The columns have been renamed, and some columns have been removed for ease of presentation.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# This chunk uses some examples from the mtcars dataset. 
+# This dataset is pre-loaded into R, and is commonly used as an example data set for statistical tests and graphing.
+# However, this data frame has the row names assigned as the make and model of the automobile, as we will see in the Table section below.
+# This code will create a new data frame, removing the row names, and will add a vector of those names instead, which we can work with much easier.
+kmtcars = mtcars # Make a copy of mtcars to process
+kmtcars$model = rownames(mtcars) # Add a vector of data
+rownames(kmtcars) = NULL # Set the row names to NULL, which returns it to the default numbering system
+kmtcars = select(kmtcars, model, everything()) # Make a new data table, where the model name comes first, then have all other rows in their original order
+
+# Subset the data frame, choosing only the following columns.
+# Functional Example
+skmtcars = select(kmtcars,
+                  model, 
+                  mpg,
+                  cyl,
+                  disp,
+                  hp
+                  )
+
+# Order the data frame in decreasing order of MPG
+# Assign the order of the data frame to be in descending order of MPG. 
+# In case of a tie, the first column value is used as a tie-breaker (i.e., is sorted alphabetically).
+# skmtcars = skmtcars[order(skmtcars$mpg, decreasing = T),] 
+# skmtcars = skmtcars[skmtcars$cyl==4,] # Subset the data frame, to only include cars where cyl == 4; Cars with 4 Cylinder Engines
+skmtcars = head(skmtcars, n=5) # Head takes the top 6 (default) rows of a table
+# rownames(skmtcars) = NULL # Reset the row numbers, otherwise, they will appear as a new column in our table.
+
+# Draw a pretty table into the rendered output
+# kbl, shorthand of kable, renders tables in our output file of choice, in a more readable fashion than simply calling the table
+kbl(skmtcars, # The data frame to print
+  booktabs = T, # Use the booktabs package, loaded in the YAML section. This is generally recommended.
+  escape = F, # This time the escape is F, because we want to process some escape characters; i.e., the '\n' used in our line breaks for our multi-row column names.
+  longtable = T, # Use the longtable package, loaded in the YAML section. This supports tables that are long, supports tables that can wrap across pages. It also centers the table on the page. This is generally recommended.
+  format = "pipe", # The document format. For this example, it is a powerpoint document, where the table needs to be 'piped' to the renderer, so our format is pipe.
+  linesep = "", # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
+  col.names = linebreak(c("Make and Model", 
+                          "Miles per Gallon",
+                          "Number of Cylinders",
+                          "Displacement in Cubic Inches",
+                          "Gross Horsepower"
+                          ),
+                        align = c("l", 
+                                  "c",
+                                  "c",
+                                  "c",
+                                  "c"
+                                  )
+                        ),
+  align = c("l",
+            "c",
+            "c",
+            "c",
+            "c",
+            "c"
+            ), caption = "Sample of the mtcars data set"
+  )
+
+
+```
+
+## Referencing Different Data in R
+
+How can we reference our data, once is it loaded?
+
+We can reference an object by name, to reference the entire data frame. By default, calling an object will print the contents to the console.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# The object name is used to reference the entire object
+mtcars 
+
+```
+
+Vectors can be their own object; however, we most frequently encounter vectors as the columns of a data frame. 
+Named vectors are used to reference a sub-set of an object.
+We can reference a vector that is part of a data frame using the vector operator `$`.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# The vector name is used to reference the vector within an object
+mtcars$mpg
+
+```
+
+Numbered indexes are used to reference a sub-set of an object, either a data frame or a vector. 
+We can reference an index position using the index operator `[]`
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# Reference the first entry of the vector mpg, of the data frame mtcars
+mtcars$mpg[1] 
+
+# Reference the first row and second column of the data frame mtcars
+mtcars[1, 2] 
+
+# Reference the entire first row
+mtcars[1,]
+
+# Reference the entire first column
+mtcars[,1]
+# This is functionally identical to using the vector reference for the first column, `mpg`
+mtcars$mpg
+
+# If no index or filter is provided, all values are referenced
+mtcars[,]
+# This is functionally identical to using the object reference
+mtcars
+ 
+```
+Being able to reference data is a prerequisite skill to being able to sort or filter data. It is additionally a prerequisite for most graphics and statistical tasks in R.
+
+## Logical Operators
+
+Data frames can be sorted by their contents, typically by searching for given values within a specified column using logical operators.
+The sorting requires at least one specified vector and one desired value.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# Logical Operators in R
+
+# Less Than
+10 < 5
+
+# Greater Than
+10 > 5
+
+# Is Equal To
+1/2 == .5
+
+# Is Not Equal To
+pi != 3
+
+# In
+5 %in% c(1, 2, 3, 4)
+
+# And
+pi > 3 & pi < 4
+
+# Or
+pi > 3 | pi == 3
+
+  
+```
+
+## Sorting Data Frames in R
+
+The most reliable way to reference and sort or filter data in R is by using vectors and indexes. We can use these references to filter data by values in given columns, using logical operators. We will be combining vector references (`$`), index references (`[]`), and logical operators to filter our data.
+
+The following example filters our data based on one value in one vector.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# The vector `am` describes if a car has an automatic (0) or manual (1) transmission
+# The index reference is sorted as [rows, columns]
+# This segment is asking for a subset of mtcars; we want all rows of mtcars where am == 1
+# This will return a data frame of only manual cars
+mtcars[mtcars$am == 1,]
+
+# We can assign this filtered data frame to a new object to save our filtered data for reference later
+mt_manual = mtcars[mtcars$am == 1,]
+```
+
+The following example filters our data based on multiple values in one vector.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# The vector `cyl` describes the number of cylinders in an engine
+# The index reference is sorted as [rows, columns]
+# mtcars observed cars that have either 4, 6, or 8 cylinders
+# This segment is asking for a subset of mtcars; we want 
+# This will return a data frame of cars with 4 or 6 cylinders
+mtcars[mtcars$cyl %in% c(4, 6),]
+
+# We can assign this filtered data frame to a new object to save our filtered data for reference later
+mt_46cyl = mtcars[mtcars$cyl %in% c(4, 6),]
+
+# Because we know that the response must be either 4, 6, or 8: 
+# we could also filter for all rows of mtcars where the cars do not have 8 cylinders
+mtcars[mtcars$cyl != 8,]
+
+mt_not8cyl = mtcars[mtcars$cyl != 8,]
+
+```
+
+
+Additional logical operators can be used in this index sorting method to make more complex filters.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# We can use logical operators to make a filter where either condition may be met, using `or` logic.
+# This will filter a data frame where:
+# - cars are manual, or
+# - cars have 4 or 6 cylinders
+mtcars[mtcars$am == 1 | mtcars$cyl %in% c(4, 6),]
+
+filter1 = mtcars[mtcars$am == 1 | mtcars$cyl %in% c(4, 6),]
+
+# We can use logical operators to make a filter where both conditions must be met, using `and` logic.
+# This will filter a data frame where:
+# - cars are manual, and
+# - cars have 4 or 6 cylinders
+mtcars[mtcars$am == 1 & mtcars$cyl %in% c(4, 6),]
+
+filter2 = mtcars[mtcars$am == 1 & mtcars$cyl %in% c(4, 6),]
+
+```
+
+We can check how many responses are returned in these filtered data frames to see the effects of our filters.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# We can use logical operators to make a filter where either condition may be met, using `or` logic.
+# This will filter a data frame where:
+# - cars are manual, or
+# - cars have 4 or 6 cylinders
+# The nrow() function will tell us how many rows of data fit this filter
+nrow(mtcars[mtcars$am == 1 | mtcars$cyl %in% c(4, 6),])
+# or
+nrow(filter1)
+
+# We can use logical operators to make a filter where both conditions must be met, using `and` logic.
+# This will filter a data frame where:
+# - cars are manual, and
+# - cars have 4 or 6 cylinders
+# The nrow() function will tell us how many rows of data fit this filter
+nrow(mtcars[mtcars$am == 1 & mtcars$cyl %in% c(4, 6),])
+# or
+nrow(filter2)
+
+```
+
+## Sorted Data Example
+
+The following table is an example of the first six rows of cars that match the filter of: manual cars with four or six cylinders.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+kmtcars = mtcars # Make a copy of mtcars to process
+
+kmtcars = kmtcars[kmtcars$am == 1 & kmtcars$cyl %in% c(4, 6),]
+# kmtcars = kmtcars[order(kmtcars$mpg, decreasing = T),]
+
+skmtcars = head(kmtcars) # Name Placeholder for Sorting Operations
+
+rownames(skmtcars) = NULL # Reset the row numbers, otherwise, they will appear as a new column in our table.
+
+kbl(skmtcars, # The data frame to print
+  booktabs = T, # Use the booktabs package, loaded in the YAML section. This is generally recommended.
+  escape = F, # This time the escape is F, because we want to process some escape characters; i.e., the '\n' used in our line breaks for our multi-row column names.
+  longtable = T, # Use the longtable package, loaded in the YAML section. This supports tables that are long, supports tables that can wrap across pages. It also centers the table on the page. This is generally recommended.
+  format = "pipe", # The document format. For this example, it is a powerpoint document, where the table needs to be 'piped' to the renderer, so our format is pipe.
+  linesep = "", # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
+  caption = "First Six cars from `mtcars` Data Set, with 4 or 6 cylinders and manual transmission. \n`mtcars[mtcars$am == 1 & mtcars$cyl %in% c(4, 6),]`"
+  )
+
+
+```
+
+## Ordering Data Frames in R
+
+Data frames can be ordered by their contents, by reordering the data based on ascending / descending values of one vector.
+
+- To sort a data frame of highest to lowest values of `mpg`:  
+`mtcars[order(mtcars$mpg, decreasing = T),]`
+
+## Sorted and Reordered Data Example
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+kmtcars = mtcars # Make a copy of mtcars to process
+
+kmtcars = kmtcars[kmtcars$am == 1 & kmtcars$cyl %in% c(4, 6),]
+kmtcars = kmtcars[order(kmtcars$mpg, decreasing = T),]
+
+skmtcars = head(kmtcars) # Name Placeholder for Sorting Operations
+
+rownames(skmtcars) = NULL # Reset the row numbers, otherwise, they will appear as a new column in our table.
+
+kbl(skmtcars, # The data frame to print
+  booktabs = T, # Use the booktabs package, loaded in the YAML section. This is generally recommended.
+  escape = F, # This time the escape is F, because we want to process some escape characters; i.e., the '\n' used in our line breaks for our multi-row column names.
+  longtable = T, # Use the longtable package, loaded in the YAML section. This supports tables that are long, supports tables that can wrap across pages. It also centers the table on the page. This is generally recommended.
+  format = "pipe", # The document format. For this example, it is a powerpoint document, where the table needs to be 'piped' to the renderer, so our format is pipe.
+  linesep = "", # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
+  caption = "Top Six cars from `mtcars` Data Set by fuel economy, with 4 or 6 cylinders and manual transmission."
+  )
+
+```
+
+## Adding New Vectors to Data
+
+Lists and Data frames store data in `vectors`. A Data frame is practically just a `list` of `vectors`.  
+
+- New vectors can be added to an object by assigning a value to a `vectorized` reference, using the vector operator `$`:  
+`mtcars$model = rownames(mtcars)`
+- A constant value can be applied to all rows using vectorized reference:  
+`mtcars$axle = 2`
+- A formula can be applied to all rows using vectorized reference:  
+`mtcars$kpl = mtcars$mpg * .354`
+<!-- https://www.mpgtokpl.com/conversionformulas.htm -->
+
+## Data with New Vectors Example
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+kmtcars = mtcars # Make a copy of mtcars to process
+
+kmtcars$kpl = kmtcars$mpg * .354
+kmtcars$kpl = round(kmtcars$kpl, 2)
+kmtcars$axle = 2
+
+skmtcars = head(kmtcars) # Name Placeholder for Sorting Operations
+
+rownames(skmtcars) = NULL # Reset the row numbers, otherwise, they will appear as a new column in our table.
+
+kbl(skmtcars, # The data frame to print
+  booktabs = T, # Use the booktabs package, loaded in the YAML section. This is generally recommended.
+  escape = F, # This time the escape is F, because we want to process some escape characters; i.e., the '\n' used in our line breaks for our multi-row column names.
+  longtable = T, # Use the longtable package, loaded in the YAML section. This supports tables that are long, supports tables that can wrap across pages. It also centers the table on the page. This is generally recommended.
+  format = "pipe", # The document format. For this example, it is a powerpoint document, where the table needs to be 'piped' to the renderer, so our format is pipe.
+  linesep = "", # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
+  caption = "Top Six cars from `mtcars` Data Set, with Kilometers per Liter and Number of Axles added."
+  )
+
+```
+
+## Selecting Specific Vectors of Data
+
+Data frames can be manipulated easier using the `dplyr` package. This package offers support for manipulating data frame objects.
+
+- Data frames can be reduced using the `select` function:  
+`library(dplyr)`  
+`mtcars = select(mtcars, model, kpl, cyl, hp, axle)`
+                  
+## Data with Select Vectors Example
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+kmtcars = mtcars # Make a copy of mtcars to process
+
+kmtcars$kpl = kmtcars$mpg * .354
+kmtcars$kpl = round(kmtcars$kpl, 2)
+kmtcars$axle = 2
+kmtcars$model = rownames(kmtcars)
+
+kmtcars = select(kmtcars, model, kpl, cyl, hp, axle)
+
+skmtcars = head(kmtcars) # Name Placeholder for Sorting Operations
+
+rownames(skmtcars) = NULL # Reset the row numbers, otherwise, they will appear as a new column in our table.
+
+kbl(skmtcars, # The data frame to print
+  booktabs = T, # Use the booktabs package, loaded in the YAML section. This is generally recommended.
+  escape = F, # This time the escape is F, because we want to process some escape characters; i.e., the '\n' used in our line breaks for our multi-row column names.
+  longtable = T, # Use the longtable package, loaded in the YAML section. This supports tables that are long, supports tables that can wrap across pages. It also centers the table on the page. This is generally recommended.
+  format = "pipe", # The document format. For this example, it is a powerpoint document, where the table needs to be 'piped' to the renderer, so our format is pipe.
+  linesep = "", # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
+  caption = "Top Six cars from `mtcars` Data Set, with Kilometers per Liter and Number of Axles added, and other columns removed."
+  )
+
+```
+
+## Save our New Data
+
+Data can be written back out from R into files, which can be loaded at a later time, or used in other software. Data can be written to a variety of file types, and does not need to return to its original format. The `save()` function creates a binarized file that only R can read, but is very fast, space efficient, and can have non-normal-shaped data.
+
+- `write.csv(mtcars, file = "./mtcars.csv")`
+- `save(mtcars, file = "./mtcars.RData")`
+
+## Goals
+
+At the end of the Presentation, we have learned:
+
+- How to load data from a variety of local formats
+- How to load data from a remote source
+- How to identify common types of data inside of R
+- How to add, remove, sort, and filter the data
+- How to save data to a variety of local formats
+

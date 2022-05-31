@@ -1,0 +1,58 @@
+--- 
+title: |
+  Green Teams R Lab
+
+author: |
+  - Chris Snyder, MPH
+
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+# bibliography: [book.bib, packages.bib]
+# biblio-style: apalike
+# link-citations: yes
+description: "A Lab with Examples for getting started using R."
+github-repo: "roqarr"
+
+# Required Latex packages for formatting
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{wrapfig}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+  - \usepackage{xcolor}
+  - \usepackage{caption}
+
+params:
+  update: FALSE
+  plot: TRUE
+  render: FALSE
+
+
+---
+
+# About
+
+
+## About the Dashboard
+
+Here is some sample information about the dashboard
+
+
+## Methods
+
+Here is some sample information about the methods used in the dashboard
+
+
+## Data Sources Cited
+
+Here is some sample information about the data used in the dashboard

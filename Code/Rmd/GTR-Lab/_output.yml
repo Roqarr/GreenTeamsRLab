@@ -1,0 +1,52 @@
+bookdown::gitbook:
+  number_sections: false # Turns off all numbering?
+  css: style.css
+  toc_depth: 1 # Only Top-level Table of Contents listings
+  config:
+    toc:
+      collapse: subsection
+      scroll_highlight: true
+      # Uses HTML Tags
+      # Before is at the top of TOC, Before the TOC Items
+      # After is at the bottom of TOC, after the TOC Items
+      before: |
+        <li><a href="./index.html">Green Teams<br>R Lab</a></li>
+        
+      after: |
+        <li><a href="https://www.montclair.edu/pseg-sustainability-institute/"><img src="./msu.png" alt="MSU Logo"></a></li>
+    toolbar:
+      position: fixed
+    edit : null
+    download: null
+    #download: ["pdf", "epub"]
+    search:
+      engine: lunr # or fuse
+      # Search function only works online, not during local testing
+      # options to control/tune search engine behavior (for
+      # fuse.js, refer to https://fusejs.io/api/options.html)
+      options: null
+    fontsettings:
+      # theme: night # Dark Mode
+      theme: white # Light Mode
+      family: serif
+      size: 2
+    sharing:
+      facebook: false
+      github: true
+      twitter: false
+      linkedin: false
+      weibo: false
+      instapaper: false
+      vk: false
+      whatsapp: false
+      all: false
+    info: true
+
+bookdown::pdf_book:
+  #includes:
+    #in_header: preamble.tex
+  #latex_engine: xelatex
+  latex_engine: pdflatex
+  citation_package: natbib
+  keep_tex: yes
+bookdown::epub_book: default
