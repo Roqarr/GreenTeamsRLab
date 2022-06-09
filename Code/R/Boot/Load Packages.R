@@ -11,16 +11,11 @@
 # Packages for Development and Github Installs ----
 library(devtools)
 
-# Packages for Multi Core Processing ----
-library(parallel)
-library(foreach)
-library(doParallel)
-
 # Packages for creation of additional graphics or statistical tests ----
 # Loaded first, as future tests will dominate namesspaces
 library(psych) # Social Science Statistics Package
-library(ggpubr) # Publication support for ggplot2
 library(ggplot2) # Graphics workhorse
+library(ggpubr) # Publication support for ggplot2
 library(scales) # Support for scale text in ggplot2
 library(wordcloud) # Word Clouds
 library(corrplot) # Correlation Plots

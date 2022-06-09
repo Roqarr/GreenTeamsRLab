@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Data Lab | Green Teams R Lab</title>
+  <meta name="description" content="A Lab with Examples for getting started using R." />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Data Lab | Green Teams R Lab" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A Lab with Examples for getting started using R." />
+  <meta name="github-repo" content="roqarr" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Data Lab | Green Teams R Lab" />
+  
+  <meta name="twitter:description" content="A Lab with Examples for getting started using R." />
+  
+
+
+
+<meta name="date" content="2022-06-09" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data.html"/>
+<link rel="next" href="graphs.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./index.html">Green Teams<br>R Lab</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="" data-path="download.html"><a href="download.html"><i class="fa fa-check"></i>Download R</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i>Introduction to R</a></li>
+<li class="chapter" data-level="" data-path="intro-lab.html"><a href="intro-lab.html"><i class="fa fa-check"></i>Intro to R Lab</a></li>
+<li class="chapter" data-level="" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i>Working with Data</a></li>
+<li class="chapter" data-level="" data-path="data-lab.html"><a href="data-lab.html"><i class="fa fa-check"></i>Data Lab</a></li>
+<li class="chapter" data-level="" data-path="graphs.html"><a href="graphs.html"><i class="fa fa-check"></i>Graphs in R</a></li>
+<li class="chapter" data-level="" data-path="graph-lab.html"><a href="graph-lab.html"><i class="fa fa-check"></i>Graphing Lab</a></li>
+<li class="chapter" data-level="" data-path="stats.html"><a href="stats.html"><i class="fa fa-check"></i>Statistics in R</a></li>
+<li class="chapter" data-level="" data-path="statistics-lab.html"><a href="statistics-lab.html"><i class="fa fa-check"></i>Statistics Lab</a></li>
+<li class="divider"></li>
+<li><a href="https://www.montclair.edu/pseg-sustainability-institute/"><img src="./psegiss.jpg" width=100% alt="MSU Logo"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><p>Green Teams R Lab</p></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-lab" class="section level1">
+<h1>Data Lab</h1>
+<div id="example-data-set-mtcars" class="section level2">
+<h2>Example Data Set <code>mtcars</code></h2>
+<p>Like in the introduction lab, we will be using the <code>mtcars</code> data set to learn how to process data in R.
+Below is an excerpt of mtcars, displaying the first 6 cars in the list. The columns have been renamed, and some columns have been removed for ease of presentation.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-33">Table 2: </span>Sample of the mtcars data set</caption>
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="20%" />
+<col width="28%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Make and Model</th>
+<th align="center">Miles per Gallon</th>
+<th align="center">Number of Cylinders</th>
+<th align="center">Displacement in Cubic Inches</th>
+<th align="center">Gross Horsepower</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Mazda RX4</td>
+<td align="center">21.0</td>
+<td align="center">6</td>
+<td align="center">160</td>
+<td align="center">110</td>
+</tr>
+<tr class="even">
+<td align="left">Mazda RX4 Wag</td>
+<td align="center">21.0</td>
+<td align="center">6</td>
+<td align="center">160</td>
+<td align="center">110</td>
+</tr>
+<tr class="odd">
+<td align="left">Datsun 710</td>
+<td align="center">22.8</td>
+<td align="center">4</td>
+<td align="center">108</td>
+<td align="center">93</td>
+</tr>
+<tr class="even">
+<td align="left">Hornet 4 Drive</td>
+<td align="center">21.4</td>
+<td align="center">6</td>
+<td align="center">258</td>
+<td align="center">110</td>
+</tr>
+<tr class="odd">
+<td align="left">Hornet Sportabout</td>
+<td align="center">18.7</td>
+<td align="center">8</td>
+<td align="center">360</td>
+<td align="center">175</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="referencing-different-data-in-r" class="section level2">
+<h2>Referencing Different Data in R</h2>
+<p>How can we reference our data, once is it loaded?</p>
+<p>We can reference an object by name, to reference the entire data frame. By default, calling an object will print the contents to the console.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="data-lab.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The object name is used to reference the entire object</span></span>
+<span id="cb60-2"><a href="data-lab.html#cb60-2" aria-hidden="true" tabindex="-1"></a>mtcars </span></code></pre></div>
+<p>Vectors can be their own object; however, we most frequently encounter vectors as the columns of a data frame.
+Named vectors are used to reference a sub-set of an object.
+We can reference a vector that is part of a data frame using the vector operator <code>$</code>.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="data-lab.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The vector name is used to reference the vector within an object</span></span>
+<span id="cb61-2"><a href="data-lab.html#cb61-2" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>mpg</span></code></pre></div>
+<p>Numbered indexes are used to reference a sub-set of an object, either a data frame or a vector.
+We can reference an index position using the index operator <code>[]</code></p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="data-lab.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference the first entry of the vector mpg, of the data frame mtcars</span></span>
+<span id="cb62-2"><a href="data-lab.html#cb62-2" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>mpg[<span class="dv">1</span>] </span>
+<span id="cb62-3"><a href="data-lab.html#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="data-lab.html#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference the first row and second column of the data frame mtcars</span></span>
+<span id="cb62-5"><a href="data-lab.html#cb62-5" aria-hidden="true" tabindex="-1"></a>mtcars[<span class="dv">1</span>, <span class="dv">2</span>] </span>
+<span id="cb62-6"><a href="data-lab.html#cb62-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-7"><a href="data-lab.html#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference the entire first row</span></span>
+<span id="cb62-8"><a href="data-lab.html#cb62-8" aria-hidden="true" tabindex="-1"></a>mtcars[<span class="dv">1</span>,]</span>
+<span id="cb62-9"><a href="data-lab.html#cb62-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-10"><a href="data-lab.html#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Reference the entire first column</span></span>
+<span id="cb62-11"><a href="data-lab.html#cb62-11" aria-hidden="true" tabindex="-1"></a>mtcars[,<span class="dv">1</span>]</span>
+<span id="cb62-12"><a href="data-lab.html#cb62-12" aria-hidden="true" tabindex="-1"></a><span class="co"># This is functionally identical to using the vector reference for the first column, `mpg`</span></span>
+<span id="cb62-13"><a href="data-lab.html#cb62-13" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>mpg</span>
+<span id="cb62-14"><a href="data-lab.html#cb62-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-15"><a href="data-lab.html#cb62-15" aria-hidden="true" tabindex="-1"></a><span class="co"># If no index or filter is provided, all values are referenced</span></span>
+<span id="cb62-16"><a href="data-lab.html#cb62-16" aria-hidden="true" tabindex="-1"></a>mtcars[,]</span>
+<span id="cb62-17"><a href="data-lab.html#cb62-17" aria-hidden="true" tabindex="-1"></a><span class="co"># This is functionally identical to using the object reference</span></span>
+<span id="cb62-18"><a href="data-lab.html#cb62-18" aria-hidden="true" tabindex="-1"></a>mtcars</span></code></pre></div>
+<p>Being able to reference data is a prerequisite skill to being able to sort or filter data. It is additionally a prerequisite for most graphics and statistical tasks in R.</p>
+</div>
+<div id="logical-operators" class="section level2">
+<h2>Logical Operators</h2>
+<p>Data frames can be sorted by their contents, typically by searching for given values within a specified column using logical operators.
+The sorting requires at least one specified vector and one desired value.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="data-lab.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Logical Operators in R</span></span>
+<span id="cb63-2"><a href="data-lab.html#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a href="data-lab.html#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Less Than</span></span>
+<span id="cb63-4"><a href="data-lab.html#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">&lt;</span> <span class="dv">5</span></span>
+<span id="cb63-5"><a href="data-lab.html#cb63-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-6"><a href="data-lab.html#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Greater Than</span></span>
+<span id="cb63-7"><a href="data-lab.html#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">&gt;</span> <span class="dv">5</span></span>
+<span id="cb63-8"><a href="data-lab.html#cb63-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-9"><a href="data-lab.html#cb63-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Is Equal To</span></span>
+<span id="cb63-10"><a href="data-lab.html#cb63-10" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span> <span class="sc">==</span> .<span class="dv">5</span></span>
+<span id="cb63-11"><a href="data-lab.html#cb63-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-12"><a href="data-lab.html#cb63-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Is Not Equal To</span></span>
+<span id="cb63-13"><a href="data-lab.html#cb63-13" aria-hidden="true" tabindex="-1"></a>pi <span class="sc">!=</span> <span class="dv">3</span></span>
+<span id="cb63-14"><a href="data-lab.html#cb63-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-15"><a href="data-lab.html#cb63-15" aria-hidden="true" tabindex="-1"></a><span class="co"># In</span></span>
+<span id="cb63-16"><a href="data-lab.html#cb63-16" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb63-17"><a href="data-lab.html#cb63-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-18"><a href="data-lab.html#cb63-18" aria-hidden="true" tabindex="-1"></a><span class="co"># And</span></span>
+<span id="cb63-19"><a href="data-lab.html#cb63-19" aria-hidden="true" tabindex="-1"></a>pi <span class="sc">&gt;</span> <span class="dv">3</span> <span class="sc">&amp;</span> pi <span class="sc">&lt;</span> <span class="dv">4</span></span>
+<span id="cb63-20"><a href="data-lab.html#cb63-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-21"><a href="data-lab.html#cb63-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Or</span></span>
+<span id="cb63-22"><a href="data-lab.html#cb63-22" aria-hidden="true" tabindex="-1"></a>pi <span class="sc">&gt;</span> <span class="dv">3</span> <span class="sc">|</span> pi <span class="sc">==</span> <span class="dv">3</span></span></code></pre></div>
+</div>
+<div id="sorting-data-frames-in-r" class="section level2">
+<h2>Sorting Data Frames in R</h2>
+<p>The most reliable way to reference and sort or filter data in R is by using vectors and indexes. We can use these references to filter data by values in given columns, using logical operators. We will be combining vector references (<code>$</code>), index references (<code>[]</code>), and logical operators to filter our data.</p>
+<p>The following example filters our data based on one value in one vector.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="data-lab.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The vector `am` describes if a car has an automatic (0) or manual (1) transmission</span></span>
+<span id="cb64-2"><a href="data-lab.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The index reference is sorted as [rows, columns]</span></span>
+<span id="cb64-3"><a href="data-lab.html#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This segment is asking for a subset of mtcars; we want all rows of mtcars where am == 1</span></span>
+<span id="cb64-4"><a href="data-lab.html#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This will return a data frame of only manual cars</span></span>
+<span id="cb64-5"><a href="data-lab.html#cb64-5" aria-hidden="true" tabindex="-1"></a>mtcars[mtcars<span class="sc">$</span>am <span class="sc">==</span> <span class="dv">1</span>,]</span>
+<span id="cb64-6"><a href="data-lab.html#cb64-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-7"><a href="data-lab.html#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="co"># We can assign this filtered data frame to a new object to save our filtered data for reference later</span></span>
+<span id="cb64-8"><a href="data-lab.html#cb64-8" aria-hidden="true" tabindex="-1"></a>mt_manual <span class="ot">=</span> mtcars[mtcars<span class="sc">$</span>am <span class="sc">==</span> <span class="dv">1</span>,]</span></code></pre></div>
+<p>The following example filters our data based on multiple values in one vector.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="data-lab.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The vector `cyl` describes the number of cylinders in an engine</span></span>
+<span id="cb65-2"><a href="data-lab.html#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The index reference is sorted as [rows, columns]</span></span>
+<span id="cb65-3"><a href="data-lab.html#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="co"># mtcars observed cars that have either 4, 6, or 8 cylinders</span></span>
+<span id="cb65-4"><a href="data-lab.html#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This segment is asking for a subset of mtcars; we want </span></span>
+<span id="cb65-5"><a href="data-lab.html#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This will return a data frame of cars with 4 or 6 cylinders</span></span>
+<span id="cb65-6"><a href="data-lab.html#cb65-6" aria-hidden="true" tabindex="-1"></a>mtcars[mtcars<span class="sc">$</span>cyl <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>),]</span>
+<span id="cb65-7"><a href="data-lab.html#cb65-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-8"><a href="data-lab.html#cb65-8" aria-hidden="true" tabindex="-1"></a><span class="co"># We can assign this filtered data frame to a new object to save our filtered data for reference later</span></span>
+<span id="cb65-9"><a href="data-lab.html#cb65-9" aria-hidden="true" tabindex="-1"></a>mt_46cyl <span class="ot">=</span> mtcars[mtcars<span class="sc">$</span>cyl <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>),]</span>
+<span id="cb65-10"><a href="data-lab.html#cb65-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-11"><a href="data-lab.html#cb65-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Because we know that the response must be either 4, 6, or 8: </span></span>
+<span id="cb65-12"><a href="data-lab.html#cb65-12" aria-hidden="true" tabindex="-1"></a><span class="co"># we could also filter for all rows of mtcars where the cars do not have 8 cylinders</span></span>
+<span id="cb65-13"><a href="data-lab.html#cb65-13" aria-hidden="true" tabindex="-1"></a>mtcars[mtcars<span class="sc">$</span>cyl <span class="sc">!=</span> <span class="dv">8</span>,]</span>
+<span id="cb65-14"><a href="data-lab.html#cb65-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-15"><a href="data-lab.html#cb65-15" aria-hidden="true" tabindex="-1"></a>mt_not8cyl <span class="ot">=</span> mtcars[mtcars<span class="sc">$</span>cyl <span class="sc">!=</span> <span class="dv">8</span>,]</span></code></pre></div>
+<p>Additional logical operators can be used in this index sorting method to make more complex filters.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="data-lab.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can use logical operators to make a filter where either condition may be met, using `or` logic.</span></span>
+<span id="cb66-2"><a href="data-lab.html#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This will filter a data frame where:</span></span>
+<span id="cb66-3"><a href="data-lab.html#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="co"># - cars are manual, or</span></span>
+<span id="cb66-4"><a href="data-lab.html#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="co"># - cars have 4 or 6 cylinders</span></span>
+<span id="cb66-5"><a href="data-lab.html#cb66-5" aria-hidden="true" tabindex="-1"></a>mtcars[mtcars<span class="sc">$</span>am <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> mtcars<span class="sc">$</span>cyl <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>),]</span>
+<span id="cb66-6"><a href="data-lab.html#cb66-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-7"><a href="data-lab.html#cb66-7" aria-hidden="true" tabindex="-1"></a>filter1 <span class="ot">=</span> mtcars[mtcars<span class="sc">$</span>am <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> mtcars<span class="sc">$</span>cyl <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>),]</span>
+<span id="cb66-8"><a href="data-lab.html#cb66-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-9"><a href="data-lab.html#cb66-9" aria-hidden="true" tabindex="-1"></a><span class="co"># We can use logical operators to make a filter where both conditions must be met, using `and` logic.</span></span>
+<span id="cb66-10"><a href="data-lab.html#cb66-10" aria-hidden="true" tabindex="-1"></a><span class="co"># This will filter a data frame where:</span></span>
+<span id="cb66-11"><a href="data-lab.html#cb66-11" aria-hidden="true" tabindex="-1"></a><span class="co"># - cars are manual, and</span></span>
+<span id="cb66-12"><a href="data-lab.html#cb66-12" aria-hidden="true" tabindex="-1"></a><span class="co"># - cars have 4 or 6 cylinders</span></span>
+<span id="cb66-13"><a href="data-lab.html#cb66-13" aria-hidden="true" tabindex="-1"></a>mtcars[mtcars<span class="sc">$</span>am <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> mtcars<span class="sc">$</span>cyl <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>),]</span>
+<span id="cb66-14"><a href="data-lab.html#cb66-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-15"><a href="data-lab.html#cb66-15" aria-hidden="true" tabindex="-1"></a>filter2 <span class="ot">=</span> mtcars[mtcars<span class="sc">$</span>am <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> mtcars<span class="sc">$</span>cyl <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>),]</span></code></pre></div>
+<p>We can check how many responses are returned in these filtered data frames to see the effects of our filters.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="data-lab.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can use logical operators to make a filter where either condition may be met, using `or` logic.</span></span>
+<span id="cb67-2"><a href="data-lab.html#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This will filter a data frame where:</span></span>
+<span id="cb67-3"><a href="data-lab.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="co"># - cars are manual, or</span></span>
+<span id="cb67-4"><a href="data-lab.html#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co"># - cars have 4 or 6 cylinders</span></span>
+<span id="cb67-5"><a href="data-lab.html#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The nrow() function will tell us how many rows of data fit this filter</span></span>
+<span id="cb67-6"><a href="data-lab.html#cb67-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(mtcars[mtcars<span class="sc">$</span>am <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> mtcars<span class="sc">$</span>cyl <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>),])</span>
+<span id="cb67-7"><a href="data-lab.html#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb67-8"><a href="data-lab.html#cb67-8" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(filter1)</span>
+<span id="cb67-9"><a href="data-lab.html#cb67-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-10"><a href="data-lab.html#cb67-10" aria-hidden="true" tabindex="-1"></a><span class="co"># We can use logical operators to make a filter where both conditions must be met, using `and` logic.</span></span>
+<span id="cb67-11"><a href="data-lab.html#cb67-11" aria-hidden="true" tabindex="-1"></a><span class="co"># This will filter a data frame where:</span></span>
+<span id="cb67-12"><a href="data-lab.html#cb67-12" aria-hidden="true" tabindex="-1"></a><span class="co"># - cars are manual, and</span></span>
+<span id="cb67-13"><a href="data-lab.html#cb67-13" aria-hidden="true" tabindex="-1"></a><span class="co"># - cars have 4 or 6 cylinders</span></span>
+<span id="cb67-14"><a href="data-lab.html#cb67-14" aria-hidden="true" tabindex="-1"></a><span class="co"># The nrow() function will tell us how many rows of data fit this filter</span></span>
+<span id="cb67-15"><a href="data-lab.html#cb67-15" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(mtcars[mtcars<span class="sc">$</span>am <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> mtcars<span class="sc">$</span>cyl <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>),])</span>
+<span id="cb67-16"><a href="data-lab.html#cb67-16" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb67-17"><a href="data-lab.html#cb67-17" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(filter2)</span></code></pre></div>
+</div>
+<div id="sorted-data-example" class="section level2">
+<h2>Sorted Data Example</h2>
+<p>The following table is an example of the first six rows of cars that match the filter of: manual cars with four or six cylinders.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-42">Table 3: </span>First Six cars from <code>mtcars</code> Data Set, with 4 or 6 cylinders and manual transmission.
+<code>mtcars[mtcars$am == 1 &amp; mtcars$cyl %in% c(4, 6),]</code></caption>
+<thead>
+<tr class="header">
+<th align="right">mpg</th>
+<th align="right">cyl</th>
+<th align="right">disp</th>
+<th align="right">hp</th>
+<th align="right">drat</th>
+<th align="right">wt</th>
+<th align="right">qsec</th>
+<th align="right">vs</th>
+<th align="right">am</th>
+<th align="right">gear</th>
+<th align="right">carb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">21.0</td>
+<td align="right">6</td>
+<td align="right">160.0</td>
+<td align="right">110</td>
+<td align="right">3.90</td>
+<td align="right">2.620</td>
+<td align="right">16.46</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="right">21.0</td>
+<td align="right">6</td>
+<td align="right">160.0</td>
+<td align="right">110</td>
+<td align="right">3.90</td>
+<td align="right">2.875</td>
+<td align="right">17.02</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="right">22.8</td>
+<td align="right">4</td>
+<td align="right">108.0</td>
+<td align="right">93</td>
+<td align="right">3.85</td>
+<td align="right">2.320</td>
+<td align="right">18.61</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">32.4</td>
+<td align="right">4</td>
+<td align="right">78.7</td>
+<td align="right">66</td>
+<td align="right">4.08</td>
+<td align="right">2.200</td>
+<td align="right">19.47</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">30.4</td>
+<td align="right">4</td>
+<td align="right">75.7</td>
+<td align="right">52</td>
+<td align="right">4.93</td>
+<td align="right">1.615</td>
+<td align="right">18.52</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">33.9</td>
+<td align="right">4</td>
+<td align="right">71.1</td>
+<td align="right">65</td>
+<td align="right">4.22</td>
+<td align="right">1.835</td>
+<td align="right">19.90</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="ordering-data-frames-in-r" class="section level2">
+<h2>Ordering Data Frames in R</h2>
+<p>Data frames can be ordered by their contents, by reordering the data based on ascending / descending values of one vector.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="data-lab.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To sort a data frame of highest to lowest values of `mpg`:  </span></span>
+<span id="cb68-2"><a href="data-lab.html#cb68-2" aria-hidden="true" tabindex="-1"></a>mtcars[<span class="fu">order</span>(mtcars<span class="sc">$</span>mpg, <span class="at">decreasing =</span> T),]</span></code></pre></div>
+</div>
+<div id="sorted-and-reordered-data-example" class="section level2">
+<h2>Sorted and Reordered Data Example</h2>
+<table>
+<caption><span id="tab:unnamed-chunk-44">Table 4: </span>Top Six cars from <code>mtcars</code> Data Set by fuel economy, with 4 or 6 cylinders and manual transmission.</caption>
+<thead>
+<tr class="header">
+<th align="right">mpg</th>
+<th align="right">cyl</th>
+<th align="right">disp</th>
+<th align="right">hp</th>
+<th align="right">drat</th>
+<th align="right">wt</th>
+<th align="right">qsec</th>
+<th align="right">vs</th>
+<th align="right">am</th>
+<th align="right">gear</th>
+<th align="right">carb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">33.9</td>
+<td align="right">4</td>
+<td align="right">71.1</td>
+<td align="right">65</td>
+<td align="right">4.22</td>
+<td align="right">1.835</td>
+<td align="right">19.90</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">32.4</td>
+<td align="right">4</td>
+<td align="right">78.7</td>
+<td align="right">66</td>
+<td align="right">4.08</td>
+<td align="right">2.200</td>
+<td align="right">19.47</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">30.4</td>
+<td align="right">4</td>
+<td align="right">75.7</td>
+<td align="right">52</td>
+<td align="right">4.93</td>
+<td align="right">1.615</td>
+<td align="right">18.52</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">30.4</td>
+<td align="right">4</td>
+<td align="right">95.1</td>
+<td align="right">113</td>
+<td align="right">3.77</td>
+<td align="right">1.513</td>
+<td align="right">16.90</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">27.3</td>
+<td align="right">4</td>
+<td align="right">79.0</td>
+<td align="right">66</td>
+<td align="right">4.08</td>
+<td align="right">1.935</td>
+<td align="right">18.90</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">26.0</td>
+<td align="right">4</td>
+<td align="right">120.3</td>
+<td align="right">91</td>
+<td align="right">4.43</td>
+<td align="right">2.140</td>
+<td align="right">16.70</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="adding-new-vectors-to-data" class="section level2">
+<h2>Adding New Vectors to Data</h2>
+<p>Lists and Data frames store data in <code>vectors</code>. A Data frame is practically just a <code>list</code> of <code>vectors</code>.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="data-lab.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># New vectors can be added to an object by assigning a value to a `vectorized` reference, using the vector operator `$`:</span></span>
+<span id="cb69-2"><a href="data-lab.html#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="co"># In this case, since we know that the rows of this data contain the names of the vehicles, we can add the names to a new column</span></span>
+<span id="cb69-3"><a href="data-lab.html#cb69-3" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>model <span class="ot">=</span> <span class="fu">rownames</span>(mtcars)</span>
+<span id="cb69-4"><a href="data-lab.html#cb69-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-5"><a href="data-lab.html#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="co"># A constant value can be applied to all rows using vectorized reference:  </span></span>
+<span id="cb69-6"><a href="data-lab.html#cb69-6" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>axle <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb69-7"><a href="data-lab.html#cb69-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-8"><a href="data-lab.html#cb69-8" aria-hidden="true" tabindex="-1"></a><span class="co"># A formula can be applied to all rows using vectorized reference:  </span></span>
+<span id="cb69-9"><a href="data-lab.html#cb69-9" aria-hidden="true" tabindex="-1"></a><span class="co"># This is the approximate conversion formula to convert mpg to kpl</span></span>
+<span id="cb69-10"><a href="data-lab.html#cb69-10" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>kpl <span class="ot">=</span> mtcars<span class="sc">$</span>mpg <span class="sc">*</span> .<span class="dv">354</span></span></code></pre></div>
+<!-- https://www.mpgtokpl.com/conversionformulas.htm -->
+</div>
+<div id="data-with-new-vectors-example" class="section level2">
+<h2>Data with New Vectors Example</h2>
+<table>
+<caption><span id="tab:unnamed-chunk-46">Table 5: </span>Top Six cars from <code>mtcars</code> Data Set, with Kilometers per Liter and Number of Axles added.</caption>
+<colgroup>
+<col width="8%" />
+<col width="6%" />
+<col width="8%" />
+<col width="6%" />
+<col width="8%" />
+<col width="9%" />
+<col width="9%" />
+<col width="4%" />
+<col width="4%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">mpg</th>
+<th align="right">cyl</th>
+<th align="right">disp</th>
+<th align="right">hp</th>
+<th align="right">drat</th>
+<th align="right">wt</th>
+<th align="right">qsec</th>
+<th align="right">vs</th>
+<th align="right">am</th>
+<th align="right">gear</th>
+<th align="right">carb</th>
+<th align="right">kpl</th>
+<th align="right">axle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">21.0</td>
+<td align="right">6</td>
+<td align="right">160</td>
+<td align="right">110</td>
+<td align="right">3.90</td>
+<td align="right">2.620</td>
+<td align="right">16.46</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">7.43</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">21.0</td>
+<td align="right">6</td>
+<td align="right">160</td>
+<td align="right">110</td>
+<td align="right">3.90</td>
+<td align="right">2.875</td>
+<td align="right">17.02</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">7.43</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">22.8</td>
+<td align="right">4</td>
+<td align="right">108</td>
+<td align="right">93</td>
+<td align="right">3.85</td>
+<td align="right">2.320</td>
+<td align="right">18.61</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">8.07</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">21.4</td>
+<td align="right">6</td>
+<td align="right">258</td>
+<td align="right">110</td>
+<td align="right">3.08</td>
+<td align="right">3.215</td>
+<td align="right">19.44</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">7.58</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">18.7</td>
+<td align="right">8</td>
+<td align="right">360</td>
+<td align="right">175</td>
+<td align="right">3.15</td>
+<td align="right">3.440</td>
+<td align="right">17.02</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">6.62</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">18.1</td>
+<td align="right">6</td>
+<td align="right">225</td>
+<td align="right">105</td>
+<td align="right">2.76</td>
+<td align="right">3.460</td>
+<td align="right">20.22</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">6.41</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="selecting-specific-vectors-of-data" class="section level2">
+<h2>Selecting Specific Vectors of Data</h2>
+<p>Data frames can be manipulated easier using the <code>dplyr</code> package. This package offers support for manipulating data frame objects, and easily filtering columns of data.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="data-lab.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lets start by installing the new package.</span></span>
+<span id="cb70-2"><a href="data-lab.html#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb70-3"><a href="data-lab.html#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb70-4"><a href="data-lab.html#cb70-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-5"><a href="data-lab.html#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Data frames can be reduced using the `select` function:</span></span>
+<span id="cb70-6"><a href="data-lab.html#cb70-6" aria-hidden="true" tabindex="-1"></a><span class="co"># The first argument is the name of our data frame,</span></span>
+<span id="cb70-7"><a href="data-lab.html#cb70-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The following arguments are all of the columns that we want to keep.</span></span>
+<span id="cb70-8"><a href="data-lab.html#cb70-8" aria-hidden="true" tabindex="-1"></a><span class="co"># This function will create a copy of mtcars, with only some of the columns present.</span></span>
+<span id="cb70-9"><a href="data-lab.html#cb70-9" aria-hidden="true" tabindex="-1"></a>some_mtcars <span class="ot">=</span> <span class="fu">select</span>(mtcars, model, kpl, cyl, hp, axle)</span></code></pre></div>
+</div>
+<div id="data-with-select-vectors-example" class="section level2">
+<h2>Data with Select Vectors Example</h2>
+<table>
+<caption><span id="tab:unnamed-chunk-48">Table 6: </span>Top Six cars from <code>mtcars</code> Data Set, with Kilometers per Liter and Number of Axles added, and other columns removed.</caption>
+<thead>
+<tr class="header">
+<th align="left">model</th>
+<th align="right">kpl</th>
+<th align="right">cyl</th>
+<th align="right">hp</th>
+<th align="right">axle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Mazda RX4</td>
+<td align="right">7.43</td>
+<td align="right">6</td>
+<td align="right">110</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Mazda RX4 Wag</td>
+<td align="right">7.43</td>
+<td align="right">6</td>
+<td align="right">110</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Datsun 710</td>
+<td align="right">8.07</td>
+<td align="right">4</td>
+<td align="right">93</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Hornet 4 Drive</td>
+<td align="right">7.58</td>
+<td align="right">6</td>
+<td align="right">110</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Hornet Sportabout</td>
+<td align="right">6.62</td>
+<td align="right">8</td>
+<td align="right">175</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Valiant</td>
+<td align="right">6.41</td>
+<td align="right">6</td>
+<td align="right">105</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="save-our-new-data" class="section level2">
+<h2>Save our New Data</h2>
+<p>Data can be written back out from R into files, which can be loaded at a later time, or used in other software. Data can be written to a variety of file types, and does not need to return to its original format. The <code>save()</code> function creates a binarized file that only R can read, but is very fast, space efficient, and can have non-normal-shaped data. Other functions will write data out to more conventional file formats, such as .csv, .xls/x, .dbf, etc.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="data-lab.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If we are happy with data that we have created, and would like to save it for later use, we can write the data to our disk.</span></span>
+<span id="cb71-2"><a href="data-lab.html#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This can also be a convenient way to convert file types, save remote data, or just quickly code and sort data for use outside R.</span></span>
+<span id="cb71-3"><a href="data-lab.html#cb71-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-4"><a href="data-lab.html#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="co"># To take a table of data and write to a csv:</span></span>
+<span id="cb71-5"><a href="data-lab.html#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(mtcars, <span class="at">file =</span> <span class="st">&quot;./mtcars.csv&quot;</span>)</span>
+<span id="cb71-6"><a href="data-lab.html#cb71-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-7"><a href="data-lab.html#cb71-7" aria-hidden="true" tabindex="-1"></a><span class="co"># To take a table of data and write to an excel file:</span></span>
+<span id="cb71-8"><a href="data-lab.html#cb71-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write.xlsx</span>(mtcars, <span class="at">file =</span> <span class="st">&quot;./mtcars.xlsx&quot;</span>)</span>
+<span id="cb71-9"><a href="data-lab.html#cb71-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-10"><a href="data-lab.html#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="co"># To take any R Data object in our environemnt viewer and save it for later:</span></span>
+<span id="cb71-11"><a href="data-lab.html#cb71-11" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(mtcars, <span class="at">file =</span> <span class="st">&quot;./mtcars.RData&quot;</span>)</span></code></pre></div>
+</div>
+<div id="goals-3" class="section level2">
+<h2>Goals</h2>
+<p>At the end of the Lab, we have learned:</p>
+<ul>
+<li>How to load data from a variety of local formats</li>
+<li>How to load data from a remote source</li>
+<li>How to identify common types of data inside of R</li>
+<li>How to add, remove, sort, and filter the data</li>
+<li>How to save data to a variety of local formats</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="graphs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"info": true
+});
+});
+</script>
+
+</body>
+
+</html>

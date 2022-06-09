@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Working with Data | Green Teams R Lab</title>
+  <meta name="description" content="A Lab with Examples for getting started using R." />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Working with Data | Green Teams R Lab" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A Lab with Examples for getting started using R." />
+  <meta name="github-repo" content="roqarr" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Working with Data | Green Teams R Lab" />
+  
+  <meta name="twitter:description" content="A Lab with Examples for getting started using R." />
+  
+
+
+
+<meta name="date" content="2022-06-09" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro-lab.html"/>
+<link rel="next" href="data-lab.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./index.html">Green Teams<br>R Lab</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="" data-path="download.html"><a href="download.html"><i class="fa fa-check"></i>Download R</a></li>
+<li class="chapter" data-level="" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i>Introduction to R</a></li>
+<li class="chapter" data-level="" data-path="intro-lab.html"><a href="intro-lab.html"><i class="fa fa-check"></i>Intro to R Lab</a></li>
+<li class="chapter" data-level="" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i>Working with Data</a></li>
+<li class="chapter" data-level="" data-path="data-lab.html"><a href="data-lab.html"><i class="fa fa-check"></i>Data Lab</a></li>
+<li class="chapter" data-level="" data-path="graphs.html"><a href="graphs.html"><i class="fa fa-check"></i>Graphs in R</a></li>
+<li class="chapter" data-level="" data-path="graph-lab.html"><a href="graph-lab.html"><i class="fa fa-check"></i>Graphing Lab</a></li>
+<li class="chapter" data-level="" data-path="stats.html"><a href="stats.html"><i class="fa fa-check"></i>Statistics in R</a></li>
+<li class="chapter" data-level="" data-path="statistics-lab.html"><a href="statistics-lab.html"><i class="fa fa-check"></i>Statistics Lab</a></li>
+<li class="divider"></li>
+<li><a href="https://www.montclair.edu/pseg-sustainability-institute/"><img src="./psegiss.jpg" width=100% alt="MSU Logo"></a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><p>Green Teams R Lab</p></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data" class="section level1">
+<h1>Working with Data</h1>
+<div id="goals-2" class="section level2">
+<h2>Goals</h2>
+<p>By the end of the Lab, we will have learned:</p>
+<ul>
+<li>How to load data from a variety of local formats</li>
+<li>How to load data from a remote source</li>
+<li>How to identify common types of data inside of R</li>
+<li>How to add, remove, sort, and filter the data</li>
+<li>How to save data to a variety of local formats</li>
+</ul>
+</div>
+<div id="what-data-formats-can-r-use" class="section level2">
+<h2>What Data Formats can R Use?</h2>
+<p>R is a powerful tool for working with data in a variety of file formats. Most likely, we will be using data that are available as a table, such as an Excel spreadsheet (or similar Google Sheet, LibreOffice, etc), or a Comma Separated Values (csv). We may also need to use data available from a networked source, such as a web site, API, or other file hosting service. R, and its supporting packages can load, and help to convert, many types of data.</p>
+<p>Common data formats and their prerequisite package are listed below:</p>
+<ul>
+<li>Base R supports reading data from plain text files (.txt) and comma-separated tables (.csv), and compressed RData files</li>
+<li><code>openxlsx</code> supports Excel (.xls, .xlsx)</li>
+<li><code>foreign</code> supports SAS, SPSS, and dBase (.dbf)</li>
+<li><code>RCurl</code> supports URL, HTTP, FTP</li>
+<li><code>jsonlite</code> supports JSON</li>
+<li><code>shapefiles</code> supports ESRI shapefiles (.shp, .shx, .dbf)</li>
+</ul>
+</div>
+<div id="getting-our-data-table-ready-to-use-in-r" class="section level2">
+<h2>Getting our Data Table Ready to Use in R</h2>
+<p>During the internship, most of our data will be collected ourselves, or provided by our organizations. When reading our data into R, there are some guidelines that we should adhere to.</p>
+<p>Table Headers</p>
+<ul>
+<li>The first row of your data table</li>
+<li>Names should start with a character</li>
+<li>Names must be unique, or will be iterated</li>
+<li>Names should be descriptive or unique IDs</li>
+<li>Names should avoid iterative counting (Q1, Q2, Q3, …)</li>
+</ul>
+<p>Table Contents</p>
+<ul>
+<li>Every row after the first is read as your data</li>
+<li>Remove any test data, total rows, or metadata before importing</li>
+<li>Remove empty rows, columns, and table formatting</li>
+<li>Any missing cell becomes a value of <code>NA</code></li>
+</ul>
+</div>
+<div id="what-format-is-our-data" class="section level2">
+<h2>What format is our Data?</h2>
+<p>What file type is our data stored in? Before R can read data, we need to determine what file format the data are in, so that we can use the correct package and function. In order to reliably read in data, we will follow these steps.</p>
+<ul>
+<li>Identify the file type from the file extension. You may need to turn file extensions on in your file explorer (Windows Explorer, Finder, etc)</li>
+<li>Check the list of installed packages in R, or CRAN, for a package that can read the file format, or install any new packages that can read that file format, if missing</li>
+<li>Load the required package(s) using <code>library()</code></li>
+</ul>
+</div>
+<div id="where-is-our-data-located" class="section level2">
+<h2>Where is our Data Located?</h2>
+<p>Where are the data saved to? Before R can read data, we need to determine where the file is located, so that we can refer to the correct file location. Data can be on local, removable, or networked locations. In order to reliably read in data, we will follow these steps.</p>
+<ul>
+<li>Files should be kept in a permanent location whenever possible</li>
+<li>Ideally, we will use a relative file path, inside the project:<br />
+(<code>"./my_folder/my_file"</code>)</li>
+<li>We can also use an absolute file path, within the local file system:<br />
+(<code>"C:/Users/my_user/my_folder/my_file"</code>) on Windows<br />
+or<br />
+(<code>"/home/my_user/my_folder/my_file"</code>) on Mac, Linux, ChromeOS</li>
+<li>We can use a URL path, for data available on a networked file system:<br />
+(<code>"https://www.MyWebsite.com/myPage/my_file.csv"</code>)</li>
+</ul>
+</div>
+<div id="loading-our-data-table-into-r" class="section level2">
+<h2>Loading our Data Table into R</h2>
+<p>Once we have identified the file format and location, we can read data into R. We can now load the required package(s), and read in the data.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="data.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This code segment is an example of how to read different data file formats into R.</span></span>
+<span id="cb57-2"><a href="data.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="co"># For a CSV file:</span></span>
+<span id="cb57-3"><a href="data.html#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">&quot;./Data/my_file.csv&quot;</span>)</span>
+<span id="cb57-4"><a href="data.html#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-5"><a href="data.html#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="co"># For an Excel file, we need an additional package:</span></span>
+<span id="cb57-6"><a href="data.html#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb57-7"><a href="data.html#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="fu">read.xlsx</span>(<span class="st">&quot;./Data/my_file.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb57-8"><a href="data.html#cb57-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-9"><a href="data.html#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="co"># For an RData object</span></span>
+<span id="cb57-10"><a href="data.html#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;./Data/my_data.Rdata&quot;</span>)</span></code></pre></div>
+</div>
+<div id="assigning-data-to-objects-in-r" class="section level2">
+<h2>Assigning Data to Objects in R</h2>
+<p>R can store any form of data as an <code>object</code> within the R environment.
+R objects will most frequently be stored in the <code>global environment</code>.
+Objects are assigned using the assignment operators: <code>=</code> or <code>&lt;-</code>. Both operators will generally behave the same.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="data.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Object assignment is a critical skill for object-oriented languages like R.</span></span>
+<span id="cb58-2"><a href="data.html#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Whenever we are assigning an object, we always write:</span></span>
+<span id="cb58-3"><a href="data.html#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="co"># object is equal to value</span></span>
+<span id="cb58-4"><a href="data.html#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-5"><a href="data.html#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assignment using the = operator</span></span>
+<span id="cb58-6"><a href="data.html#cb58-6" aria-hidden="true" tabindex="-1"></a>my_csv <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&quot;./Data/my_file.csv&quot;</span>)</span>
+<span id="cb58-7"><a href="data.html#cb58-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-8"><a href="data.html#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Assognment using the left assign operator</span></span>
+<span id="cb58-9"><a href="data.html#cb58-9" aria-hidden="true" tabindex="-1"></a>my_xlsx <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;./Data/my_file.xlsx&quot;</span>)</span></code></pre></div>
+</div>
+<div id="different-types-of-data-in-r" class="section level2">
+<h2>Different Types of Data In R</h2>
+<p>Now that we have some data read into R, we can talk about the different types of data inside of R. All <code>objects</code> inside of R will be of a specific <code>class</code>. Common data <code>class</code> are listed below.</p>
+<ul>
+<li>Data Frame:<br />
+A 2-dimensional table, storing multiple types of data</li>
+<li>List:<br />
+A 1-dimensional list, storing multiple types of data</li>
+<li>Vector:<br />
+A 1-dimensional list, storing only data of the same type</li>
+</ul>
+</div>
+<div id="different-types-of-data-in-r-1" class="section level2">
+<h2>Different Types of Data In R</h2>
+<p>All <code>objects</code> inside of R will be of a specific <code>type</code>. Common data <code>types</code> are listed below.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="data.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vectors of different types of data</span></span>
+<span id="cb59-2"><a href="data.html#cb59-2" aria-hidden="true" tabindex="-1"></a>Numeric <span class="ot">=</span> <span class="fu">c</span>(.<span class="dv">5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>) </span>
+<span id="cb59-3"><a href="data.html#cb59-3" aria-hidden="true" tabindex="-1"></a>Integer <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb59-4"><a href="data.html#cb59-4" aria-hidden="true" tabindex="-1"></a>Character <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Anything in Quotes&quot;</span>, <span class="st">&quot;1&quot;</span>)</span>
+<span id="cb59-5"><a href="data.html#cb59-5" aria-hidden="true" tabindex="-1"></a>Logical <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, T, F) </span>
+<span id="cb59-6"><a href="data.html#cb59-6" aria-hidden="true" tabindex="-1"></a>Factor <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Strongly Disagree&quot;</span>, <span class="st">&quot;Disagree&quot;</span>, <span class="st">&quot;Agree&quot;</span>, <span class="st">&quot;Strongly Agree&quot;</span>)</span></code></pre></div>
+</div>
+<div id="viewing-data-in-r" class="section level2">
+<h2>Viewing Data in R</h2>
+<p>Any object can be viewed by referencing it in the R terminal.<br />
+For example: <code>mtcars</code> will print the mtcars data frame inside of the console.</p>
+<p>The <code>View()</code> function is used to display objects in a separate tab. If using <code>View()</code> inside of R, you will receive a new pop-up window with your requested object. If using <code>View()</code> inside of RStudio, you will receive a new tab within your RStudio session.<br />
+For example: <code>View(mtcars)</code> will open the data frame inside of a new tab. We will be using the <code>mtcars</code> data set in this presentation.
+Note that <code>View()</code> is one of the few functions in R that begins with capitalization.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro-lab.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-lab.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"info": true
+});
+});
+</script>
+
+</body>
+
+</html>

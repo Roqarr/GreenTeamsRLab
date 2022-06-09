@@ -12,7 +12,7 @@
 # Render the bookdown dashboard for Cornerstone Family Programs Internal Use
 render_gtr_lab = function() {
   # Set the website directory inside the project dir
-  rendir = sprintf("%s/Documentation/Lab/GTR-Lab", getwd())
+  rendir = sprintf("%s/Reports/Lab/GTR-Lab", getwd())
   
   # Render the website using bookdown
   render_book("./Code/Rmd/GTR-Lab", 

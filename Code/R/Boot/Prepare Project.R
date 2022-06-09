@@ -91,10 +91,13 @@ The Document samples inside this project are located inside the following direct
 %s/Code/Rmd
 
 Documentation and resources about this project are located inside the following directory:
-%s/Documentation
+%s/Reports
 
 To regenerate the Powerpoint Slides used in this project, use the following function:
-render_gtr_lessons()
+render_gtr()
+
+If you need additional assistance, or have any questions, please contact:
+Chris Snyder, snyderc@montclair.edu
 
 ", 
   Sys.time(), 

@@ -16,22 +16,22 @@
 .devmode = T
 
 if (.devmode == T) {
-  source("./Code/R/Boot/Prepare Project.R") # Load the Project  
+  source("./Code/R/Boot/Prepare Project.R") # Load the Project in Development mode, for use by CSS
 } 
 
 if (.devmode == F) {
-  writeLines("Welcome to the Green_Teams Sample R Project.
+  writeLines(sprintf("Welcome to the Green Teams R Lab, a sample R project.
   
+You are currently working out of the Green Teams R Lab Directory, inside of an R Project.
+Your current working directory is: %s
+
+The behavior of our R project is influenced by the contents of the .Rprofile file.
+Each time R is started, R will check for the existence of a .Rprofile file in the working directory.
+If R finds the .Rprofile file, it will run the contents of that file.
+In this case, the .Rprofile is presenting this help information to you at startup.
 
 If you need additional assistance, or have any questions, please contact:
 Chris Snyder, snyderc@montclair.edu
-             ")
+             ", getwd()))
 }
 
-# If this is your first time using the project, and you have not installed the recommended packages yet, please do so by executing the following scripts based on operating system.
-# 
-# If you are on Windows, please enter the following command into the R console:
-#   source('./Code/R/Boot/Check Packages Windows.R')
-# 
-# If you are on Mac or Linux, please enter the following command into the R console:
-#   source('./Code/R/Boot/Check Packages Unix.R')

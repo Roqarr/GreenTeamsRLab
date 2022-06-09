@@ -12,8 +12,7 @@
 # na
 
 # Report Generation Functions ----
-source("./Code/R/Render/Render Lessons.R")
-source("./Code/R/Render/Render GTR Lab.R")
+source("./Code/R/Render/Render GTR.R")
 writeLines(sprintf("%s LOADED: Report Rendering Tools", Sys.time()))
 
 # Finish ----

@@ -45,7 +45,7 @@ render_gtr_lessons = function() {
   
   for (i in 1:nrow(docs)) {
     render(input = docs$slides[i], 
-           output_dir = "./Documentation/Lessons/",
+           output_dir = "./Reports/Lessons/",
            output_file = ,
            # params = list("state" = "nj",
            #               "county" = as.character(i)),

@@ -43,16 +43,11 @@ params:
 # About
 
 
-## About the Dashboard
+## About the Lab
 
-Here is some sample information about the dashboard
+Welcome to the Green Teams R Lab!
 
+This document will help you and your team use R to complete your projects over the course of the summer.
+Before we get started, please make sure to download R and RStudio so you can follow along with the examples given in this Lab.
 
-## Methods
-
-Here is some sample information about the methods used in the dashboard
-
-
-## Data Sources Cited
-
-Here is some sample information about the data used in the dashboard
+Instructions on how to download R are available on the next slides.

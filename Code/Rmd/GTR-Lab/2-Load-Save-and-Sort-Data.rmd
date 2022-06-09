@@ -2,7 +2,7 @@
 
 ## Goals
 
-By the end of the Presentation, we will have learned:
+By the end of the Lab, we will have learned:
 
 - How to load data from a variety of local formats
 - How to load data from a remote source
@@ -14,8 +14,13 @@ By the end of the Presentation, we will have learned:
 
 ## What Data Formats can R Use?
 
+R is a powerful tool for working with data in a variety of file formats. Most likely, we will be using data that are available as a table, such as an Excel spreadsheet (or similar Google Sheet, LibreOffice, etc), or a Comma Separated Values (csv). We may also need to use data available from a networked source, such as a web site, API, or other file hosting service. R, and its supporting packages can load, and help to convert, many types of data.
+
+
+Common data formats and their prerequisite package are listed below:
+
 - Base R supports reading data from plain text files (.txt) and comma-separated tables (.csv), and compressed RData files
-- `readxl` supports Excel (.xls, .xlsx)
+- `openxlsx` supports Excel (.xls, .xlsx)
 - `foreign` supports SAS, SPSS, and dBase (.dbf)
 - `RCurl` supports URL, HTTP, FTP
 - `jsonlite` supports JSON
@@ -23,8 +28,8 @@ By the end of the Presentation, we will have learned:
 
 ## Getting our Data Table Ready to Use in R
 
-:::::: {.columns}
-::: {.column}
+During the internship, most of our data will be collected ourselves, or provided by our organizations. When reading our data into R, there are some guidelines that we should adhere to.
+
 Table Headers
 
 - The first row of your data table
@@ -33,9 +38,6 @@ Table Headers
 - Names should be descriptive or unique IDs
 - Names should avoid iterative counting (Q1, Q2, Q3, ...)
 
-:::
-
-::: {.column}
 Table Contents
 
 - Every row after the first is read as your data
@@ -43,12 +45,9 @@ Table Contents
 - Remove empty rows, columns, and table formatting
 - Any missing cell becomes a value of `NA`
 
-:::
-::::::
-
 ## What format is our Data?
 
-What file type is our data stored in?
+What file type is our data stored in? Before R can read data, we need to determine what file format the data are in, so that we can use the correct package and function. In order to reliably read in data, we will follow these steps.
 
 - Identify the file type from the file extension. You may need to turn file extensions on in your file explorer (Windows Explorer, Finder, etc)
 - Check the list of installed packages in R, or CRAN, for a package that can read the file format, or install any new packages that can read that file format, if missing
@@ -56,25 +55,36 @@ What file type is our data stored in?
 
 ## Where is our Data Located?
 
-Where are the data saved to? Data can be on local, removable, or networked locations.
+Where are the data saved to? Before R can read data, we need to determine where the file is located, so that we can refer to the correct file location. Data can be on local, removable, or networked locations. In order to reliably read in data, we will follow these steps.
 
 - Files should be kept in a permanent location whenever possible
 - Ideally, we will use a relative file path, inside the project:  
 (`"./my_folder/my_file"`)
 - We can also use an absolute file path, within the local file system:  
-(`"C:/Users/my_user/my_folder/my_file"`)
+(`"C:/Users/my_user/my_folder/my_file"`) on Windows  
+or  
+(`"/home/my_user/my_folder/my_file"`) on Mac, Linux, ChromeOS
 - We can use a URL path, for data available on a networked file system:  
 (`"https://www.MyWebsite.com/myPage/my_file.csv"`)
 
 
 ## Loading our Data Table into R
 
-Load the required package(s), and read in the data.
+Once we have identified the file format and location, we can read data into R. We can now load the required package(s), and read in the data.
 
-- `read.csv("./Data/my_file.csv")`
-- `library(readxl)`  
-`read_excel("./Data/my_file.xlsx")`
-- `load("./Data/my_data.Rdata")`
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# This code segment is an example of how to read different data file formats into R.
+# For a CSV file:
+read.csv("./Data/my_file.csv")
+
+# For an Excel file, we need an additional package:
+library(openxlsx)
+read.xlsx("./Data/my_file.xlsx", sheet = 1)
+
+# For an RData object
+load("./Data/my_data.Rdata")
+```
+
 
 
 ## Assigning Data to Objects in R
@@ -83,13 +93,21 @@ R can store any form of data as an `object` within the R environment.
 R objects will most frequently be stored in the `global environment`.
 Objects are assigned using the assignment operators: `=` or `<-`. Both operators will generally behave the same.
 
-- `my_csv = read.csv("./Data/my_file.csv")`
-- `my_xlsx <- read_excel("./Data/my_file.xlsx")`
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# Object assignment is a critical skill for object-oriented languages like R.
+# Whenever we are assigning an object, we always write:
+# object is equal to value
 
+# Assignment using the = operator
+my_csv = read.csv("./Data/my_file.csv")
+
+# Assognment using the left assign operator
+my_xlsx <- read_excel("./Data/my_file.xlsx")
+```
 
 ## Different Types of Data In R
 
-All `objects` inside of R will be of a specific `class`. Common data `class` are listed below.
+Now that we have some data read into R, we can talk about the different types of data inside of R. All `objects` inside of R will be of a specific `class`. Common data `class` are listed below.
 
 - Data Frame:  
 A 2-dimensional table, storing multiple types of data
@@ -103,12 +121,14 @@ A 1-dimensional list, storing only data of the same type
 
 All `objects` inside of R will be of a specific `type`. Common data `types` are listed below.
 
-- Numeric: `.5`, `1`, `1.5`
-- Integer: `1`, `2`, `3`
-- Character: `"Anything in Quotes"`, `"1"`
-- Logical: `TRUE`, `FALSE`
-- Factor: `Strongly Disagree`, `Disagree`, `Agree`, `Strongly Agree`
-
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# Vectors of different types of data
+Numeric = c(.5, 1, 1.5) 
+Integer = c(1, 2, 3)
+Character = c("Anything in Quotes", "1")
+Logical = c(TRUE, FALSE, T, F) 
+Factor = c("Strongly Disagree", "Disagree", "Agree", "Strongly Agree")
+```
 
 ## Viewing Data in R
 
@@ -380,8 +400,11 @@ kbl(skmtcars, # The data frame to print
 
 Data frames can be ordered by their contents, by reordering the data based on ascending / descending values of one vector.
 
-- To sort a data frame of highest to lowest values of `mpg`:  
-`mtcars[order(mtcars$mpg, decreasing = T),]`
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# To sort a data frame of highest to lowest values of `mpg`:  
+mtcars[order(mtcars$mpg, decreasing = T),]
+
+```
 
 ## Sorted and Reordered Data Example
 
@@ -410,14 +433,21 @@ kbl(skmtcars, # The data frame to print
 
 Lists and Data frames store data in `vectors`. A Data frame is practically just a `list` of `vectors`.  
 
-- New vectors can be added to an object by assigning a value to a `vectorized` reference, using the vector operator `$`:  
-`mtcars$model = rownames(mtcars)`
-- A constant value can be applied to all rows using vectorized reference:  
-`mtcars$axle = 2`
-- A formula can be applied to all rows using vectorized reference:  
-`mtcars$kpl = mtcars$mpg * .354`
-<!-- https://www.mpgtokpl.com/conversionformulas.htm -->
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# New vectors can be added to an object by assigning a value to a `vectorized` reference, using the vector operator `$`:
+# In this case, since we know that the rows of this data contain the names of the vehicles, we can add the names to a new column
+mtcars$model = rownames(mtcars)
 
+# A constant value can be applied to all rows using vectorized reference:  
+mtcars$axle = 2
+
+# A formula can be applied to all rows using vectorized reference:  
+# This is the approximate conversion formula to convert mpg to kpl
+mtcars$kpl = mtcars$mpg * .354
+
+```
+<!-- https://www.mpgtokpl.com/conversionformulas.htm -->  
+  
 ## Data with New Vectors Example
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -444,11 +474,20 @@ kbl(skmtcars, # The data frame to print
 
 ## Selecting Specific Vectors of Data
 
-Data frames can be manipulated easier using the `dplyr` package. This package offers support for manipulating data frame objects.
+Data frames can be manipulated easier using the `dplyr` package. This package offers support for manipulating data frame objects, and easily filtering columns of data.
 
-- Data frames can be reduced using the `select` function:  
-`library(dplyr)`  
-`mtcars = select(mtcars, model, kpl, cyl, hp, axle)`
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# Lets start by installing the new package.
+install.packages("dplyr")
+library(dplyr)
+
+# Data frames can be reduced using the `select` function:
+# The first argument is the name of our data frame,
+# The following arguments are all of the columns that we want to keep.
+# This function will create a copy of mtcars, with only some of the columns present.
+some_mtcars = select(mtcars, model, kpl, cyl, hp, axle)
+
+```
                   
 ## Data with Select Vectors Example
 
@@ -479,14 +518,26 @@ kbl(skmtcars, # The data frame to print
 
 ## Save our New Data
 
-Data can be written back out from R into files, which can be loaded at a later time, or used in other software. Data can be written to a variety of file types, and does not need to return to its original format. The `save()` function creates a binarized file that only R can read, but is very fast, space efficient, and can have non-normal-shaped data.
+Data can be written back out from R into files, which can be loaded at a later time, or used in other software. Data can be written to a variety of file types, and does not need to return to its original format. The `save()` function creates a binarized file that only R can read, but is very fast, space efficient, and can have non-normal-shaped data. Other functions will write data out to more conventional file formats, such as .csv, .xls/x, .dbf, etc.
 
-- `write.csv(mtcars, file = "./mtcars.csv")`
-- `save(mtcars, file = "./mtcars.RData")`
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# If we are happy with data that we have created, and would like to save it for later use, we can write the data to our disk.
+# This can also be a convenient way to convert file types, save remote data, or just quickly code and sort data for use outside R.
+
+# To take a table of data and write to a csv:
+write.csv(mtcars, file = "./mtcars.csv")
+
+# To take a table of data and write to an excel file:
+write.xlsx(mtcars, file = "./mtcars.xlsx")
+
+# To take any R Data object in our environemnt viewer and save it for later:
+save(mtcars, file = "./mtcars.RData")
+
+```
 
 ## Goals
 
-At the end of the Presentation, we have learned:
+At the end of the Lab, we have learned:
 
 - How to load data from a variety of local formats
 - How to load data from a remote source

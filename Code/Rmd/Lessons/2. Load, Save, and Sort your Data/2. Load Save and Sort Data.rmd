@@ -118,7 +118,7 @@ By the end of the Presentation, we will have learned:
 # What Data Formats can R Use?
 
 - Base R supports reading data from plain text files (.txt) and comma-separated tables (.csv), and compressed RData files
-- `readxl` supports Excel (.xls, .xlsx)
+- `openxlsx` supports Excel (.xls, .xlsx)
 - `foreign` supports SAS, SPSS, and dBase (.dbf)
 - `RCurl` supports URL, HTTP, FTP
 - `jsonlite` supports JSON
@@ -165,7 +165,9 @@ Where are the data saved to? Data can be on local, removable, or networked locat
 - Ideally, we will use a relative file path, inside the project:  
 (`"./my_folder/my_file"`)
 - We can also use an absolute file path, within the local file system:  
-(`"C:/Users/my_user/my_folder/my_file"`)
+(`"C:/Users/my_user/my_folder/my_file"`)  
+or  
+(`"/home/my_user/my_folder/my_file"`)
 - We can use a URL path, for data available on a networked file system:  
 (`"https://www.MyWebsite.com/myPage/my_file.csv"`)
 
@@ -175,8 +177,8 @@ Where are the data saved to? Data can be on local, removable, or networked locat
 Load the required package(s), and read in the data.
 
 - `read.csv("./Data/my_file.csv")`
-- `library(readxl)`  
-`read_excel("./Data/my_file.xlsx")`
+- `library(openxlsx)`  
+`read.xlsx("./Data/my_file.xlsx", sheet = 1)`
 - `load("./Data/my_data.Rdata")`
 
 
@@ -286,7 +288,7 @@ kbl(skmtcars, # The data frame to print
             "c",
             "c",
             "c"
-            ), caption = "Sample of the mtcars data set"
+            )
   )
 
 
@@ -352,8 +354,7 @@ kbl(skmtcars, # The data frame to print
   escape = F, # This time the escape is F, because we want to process some escape characters; i.e., the '\n' used in our line breaks for our multi-row column names.
   longtable = T, # Use the longtable package, loaded in the YAML section. This supports tables that are long, supports tables that can wrap across pages. It also centers the table on the page. This is generally recommended.
   format = "pipe", # The document format. For this example, it is a powerpoint document, where the table needs to be 'piped' to the renderer, so our format is pipe.
-  linesep = "", # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
-  caption = "First Six cars from `mtcars` Data Set, with 4 or 6 cylinders and manual transmission. \n`mtcars[mtcars$am == 1 & mtcars$cyl %in% c(4, 6),]`"
+  linesep = "" # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
   )
 
 
@@ -383,8 +384,7 @@ kbl(skmtcars, # The data frame to print
   escape = F, # This time the escape is F, because we want to process some escape characters; i.e., the '\n' used in our line breaks for our multi-row column names.
   longtable = T, # Use the longtable package, loaded in the YAML section. This supports tables that are long, supports tables that can wrap across pages. It also centers the table on the page. This is generally recommended.
   format = "pipe", # The document format. For this example, it is a powerpoint document, where the table needs to be 'piped' to the renderer, so our format is pipe.
-  linesep = "", # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
-  caption = "Top Six cars from `mtcars` Data Set by fuel economy, with 4 or 6 cylinders and manual transmission."
+  linesep = "" # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
   )
 
 ```
@@ -419,8 +419,7 @@ kbl(skmtcars, # The data frame to print
   escape = F, # This time the escape is F, because we want to process some escape characters; i.e., the '\n' used in our line breaks for our multi-row column names.
   longtable = T, # Use the longtable package, loaded in the YAML section. This supports tables that are long, supports tables that can wrap across pages. It also centers the table on the page. This is generally recommended.
   format = "pipe", # The document format. For this example, it is a powerpoint document, where the table needs to be 'piped' to the renderer, so our format is pipe.
-  linesep = "", # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
-  caption = "Top Six cars from `mtcars` Data Set, with Kilometers per Liter and Number of Axles added."
+  linesep = "" # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
   )
 
 ```
@@ -454,8 +453,7 @@ kbl(skmtcars, # The data frame to print
   escape = F, # This time the escape is F, because we want to process some escape characters; i.e., the '\n' used in our line breaks for our multi-row column names.
   longtable = T, # Use the longtable package, loaded in the YAML section. This supports tables that are long, supports tables that can wrap across pages. It also centers the table on the page. This is generally recommended.
   format = "pipe", # The document format. For this example, it is a powerpoint document, where the table needs to be 'piped' to the renderer, so our format is pipe.
-  linesep = "", # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
-  caption = "Top Six cars from `mtcars` Data Set, with Kilometers per Liter and Number of Axles added, and other columns removed."
+  linesep = "" # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
   )
 
 ```

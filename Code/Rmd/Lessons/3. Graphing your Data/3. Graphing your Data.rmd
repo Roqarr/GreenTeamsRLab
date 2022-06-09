@@ -1,0 +1,503 @@
+---
+# Green_Teams ----
+# Written by Chris Snyder, MPH (Roqarr)
+# Written for the Montclair State University PSEG Institute for Sustainability Studies
+# Documentation ----
+# This is the RMD script for powerpoint document generation
+# Arguments ----
+# Defines the parameters to pass into the Rmd document for knitting.
+# Parameters allow you to pass arguments into the Rmd document, similar to a function, to create dynamic reports.
+# Similar to a function, you must define the parameters at the beginning of the report, and can assign default values.
+# These parameters can be accessed inside the Rmd document using a special environment object: 'params'
+# The 'params' object is a special read-only environment object.
+# Each of the parameters lsited below, can be accesed as vectors of 'params', using `params$value`
+params:
+ state: "New Jersey"
+ university: "Montclair State University"
+ program: "Green Teams"
+# Returns ----
+# na
+
+# The Title of the Document. Accepts Multiple Lines and Images, when preceeded by the '|', the pipe character.
+# By default, this is centered. 
+title: | 
+   Graphing Your Data
+    
+ 
+# The Subtitle of the Document. Accepts Multiple Lines and Images, when preceeded by the '|', the pipe character.
+subtitle: |
+ How to make and export
+ dynamic graphics using R
+ 
+
+# The List of Authors, separated by a new line and preceeded by a '-' and a space
+# Authors will be placed on a line, and automatically centered
+# Notes about the authors, as footnotes, can be added with '^[]', with the contents of the footnote placed inside of the brackets.
+author: 
+  - Chris Snyder, MPH
+
+# Date; Use Pipe to allow multiple lines or inline R code.
+# R code can be accepted in most arguments using the backtick / backquote character '`' (located above the tab key).
+# This example will use an R function to pull the current date, and add it to the document as the entry for the date.
+# You could alternatively write in text for a fixed Year, Semester, Quarter, etc.
+date: |
+  Green Teams, 
+  `r format(Sys.Date(), "%Y")`
+
+# The abstract block of text, located below the authors / date
+# abstract: |
+#  Here is placeholder abstract Text.
+#  It can have multiple lines, and should be limited to a brief description of the paper, if you choose to add one.
+
+# Table of Contents Settings
+# Do you want to add a Table of Contents? True or False
+toc: True
+# The Defined Title of the Table of Contents
+# You can specify a title for the Table of Contents here. The example asserts that the toc is called 'Table of Contents'.
+toc-title: "Table of Contents"
+# The Defined depth of headers to include in the Table of Contents. 
+# This value impacts the TOC and Sidebar Navigation in PDF views.
+# Provide a number of how many headings / subheadings you want to have presented in the Table of Contents.
+# This example will show Headings (1) and Sub-Headings (2), but will not display any section headings at 3 or below.
+toc-depth: 2
+# Do you want to add a Table of Figures? True or False
+# This will add a separate table, listing all of the defined figures. 
+# Recommended to keep False
+lof: False 
+# Do you want to add a Table of Tables? True or False
+# This will add a separate table, listing all of the defined tables. 
+# Recommended to keep False
+lot: False 
+
+# Defines the output file format of the document that will be made by this Rmd file.
+# This example provides the three most common document types: PDF, Word, and Web (HTML).
+# There are additional potential formats for presentations, powerpoints, etc.
+# This example is formatted for a PDF output. 
+# Please note, the document format may impact what code or outputs can be accepted inside the Rmd file.
+# output: powerpoint_presentation
+# The Reference Document is provided
+output: 
+  powerpoint_presentation:
+    reference_doc: Parallax_Blue.pptx
+
+# output: pdf_document
+# output: word_document
+# output: html_document
+
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{wrapfig}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+  - \usepackage{xcolor}
+
+---
+
+# Goals
+
+By the end of the Presentation, we will have learned:
+
+- How to organize data for ease of graphing
+- How to generate graphs for descriptive statistics
+- How to add additional detail to graphs
+- How to save and export graphics
+
+
+
+# Recommended Package
+
+R natively supports the creation of basic graphics. Additional packages allow for the creation of more advanced and presentation-ready graphics.  
+We can use `install.packages()` to download or update these packages.
+
+- `base`, for creating statistical graphics
+- `ggplot2`, for creating advanced data visuals
+- `ggpubr`, supplement for `ggplot2` for publication-ready graphs
+- `tmap`, for creation of GIS maps
+- `numform`, for displaying publication-ready data
+
+
+# Preparing the recommended packages
+
+Once downloaded, use `library()` to load required packages into R.  
+`base` is always loaded by R at start-up.  
+We can check what packages are loaded using the function: `loadedNamespaces()`
+
+- `library(ggplot2)`
+- `library(ggpubr)`
+
+# Organizing Data for Graphing
+
+Like most functions in R, graphing is performed using vectors of data. When making graphs, we will have the best and most reliable results when the following conditions are met:
+
+- Data are stored in a singular data frame (table)
+- We are able to sort or filter our data based on a given value
+- Columns (vectors) represent different variables or attributes of our data
+- Rows represent different observations, cases, responses, etc.
+
+# Graphing Lab
+
+The rest of the presentation corresponds to the Graphing Lab.
+
+Launch RStudio and open the lab now if you have not done so already.
+
+# Example Data Set `mtcars`
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# This chunk uses some examples from the mtcars dataset. 
+# This dataset is pre-loaded into R, and is commonly used as an example data set for statistical tests and graphing.
+# However, this data frame has the row names assigned as the make and model of the automobile, as we will see in the Table section below.
+# This code will create a new data frame, removing the row names, and will add a vector of those names instead, which we can work with much easier.
+kmtcars = mtcars # Make a copy of mtcars to process
+kmtcars$model = rownames(mtcars) # Add a vector of data
+rownames(kmtcars) = NULL
+kmtcars = kmtcars %>% select(model, everything())
+
+# Subset the data frame, choosing only the following columns.
+# The example below includes both the functional and piped forms of this code, which behave the same.
+
+# Functional Example
+skmtcars = select(kmtcars,
+                  model, 
+                  mpg,
+                  cyl,
+                  disp,
+                  hp
+                  )
+
+# Order the data frame in decreasing order of MPG
+# Assign the order of the data frame to be in descending order of MPG. 
+# In case of a tie, the first column value is used as a tie-breaker (i.e., is sorted alphabetically).
+skmtcars = skmtcars[order(skmtcars$mpg, decreasing = T),] 
+skmtcars = skmtcars[skmtcars$cyl==4,] # Subset the data frame, to only include
+skmtcars = head(skmtcars)
+rownames(skmtcars) = NULL # Reset the row numbers, otherwise, they will appear as a new column in our table.
+
+kbl(skmtcars, # The data frame to print
+  booktabs = T, # Use the booktabs package, loaded in the YAML section. This is generally recommended.
+  escape = F, # This time the escape is F, because we want to process some escape characters; i.e., the '\n' used in our line breaks for our multi-row column names.
+  longtable = T, # Use the longtable package, loaded in the YAML section. This supports tables that are long, supports tables that can wrap across pages. It also centers the table on the page. This is generally recommended.
+  format = "pipe", # The document format. For this example, it is a pdf document, which uses LaTeX to render, so our format is latex.
+  linesep = "", # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
+  col.names = linebreak(c("Make and Model", 
+                          "Miles per Gallon",
+                          "Number of Cylinders",
+                          "Displacement in Cubic Inches",
+                          "Gross Horsepower"
+                          ),
+                        align = c("l", 
+                                  "c",
+                                  "c",
+                                  "c",
+                                  "c"
+                                  )
+                        ),
+  align = c("l",
+            "c",
+            "c",
+            "c",
+            "c",
+            "c"
+            )
+  )
+
+
+# kable(mtcars, format = "pipe")
+
+```
+
+
+# Scatter plots - `base`
+
+:::::: {.columns}
+::: {.column}
+Main Function Call:
+```{r echo=TRUE, eval=FALSE}
+plot(mtcars$mpg~mtcars$hp)
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+plot(mtcars$mpg~mtcars$hp, 
+     main = "Simple Scatter Plot", 
+     xlab = "Horsepower",
+     ylab = "Miles per Gallon"
+     )
+```
+:::
+::::::
+
+# Scatter plots - `ggplot2`
+
+:::::: {.columns}
+::: {.column}
+Main Function Call:
+```{r echo=TRUE, eval=FALSE}
+ggplot(mtcars, mapping = aes(x = hp, y = mpg)) + 
+  geom_point()
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(mtcars, mapping = aes(x = hp, y = mpg)) + 
+  geom_point() +
+  labs(x = "Horsepower", 
+       y = "Miles per Gallon", 
+       title = "Fuel Economy and Performance", # The Bolded Graph Title
+       subtitle = "Scatterplot of Fuel Efficiency Compared to Engine Performance " # The Graph Subtitle
+      ) +
+  # scale_y_continuous(labels = comma) +
+  # scale_x_continuous(labels = comma) +
+        theme(plot.title = element_text(hjust = 0.5), # centers the title
+              plot.subtitle = element_text(hjust = 0.5), # centers the subtitle
+              panel.background = element_blank(), # Removes greyscale background
+              axis.line = element_line() # Adds black line border to x and y axis
+      )
+```
+:::
+::::::
+
+# Linear Regression - `base`
+
+:::::: {.columns}
+::: {.column}
+Main Function Call:
+```{r echo=TRUE, eval=FALSE}
+plot(mtcars$mpg~mtcars$hp)
+abline(lm(mtcars$mpg~mtcars$hp))
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+plot(mtcars$mpg~mtcars$hp, 
+     main = "Simple Linear Regression of MPG~HP", 
+     xlab = "Horsepower",
+     ylab = "Miles per Gallon"
+     ) +
+  abline(lm(mtcars$mpg~mtcars$hp))
+```
+:::
+::::::
+
+# Linear Regression - `ggpubr`
+
+:::::: {.columns}
+::: {.column}
+Main Function Call:
+```{r echo=TRUE, eval=FALSE}
+ggscatter(mtcars, "hp", "mpg", 
+          add = "reg.line"
+          )
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggscatter(mtcars,
+          "hp",
+          "mpg",
+          title = "Correlation Plot of Fuel Economy\nby Engine Performance", 
+          xlab = "Horsepower",
+          ylab = "Miles per Gallon",
+          add = "reg.line", 
+          conf.int = T,
+          cor.coef = T
+          ) + 
+  theme(plot.title = element_text(hjust = 0.5)) # centers the title)
+```
+:::
+::::::
+
+
+# Boxplots - `base`
+
+:::::: {.columns}
+::: {.column}
+Main Function Call:
+```{r echo=TRUE, eval=FALSE}
+boxplot(mtcars$mpg)
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+boxplot(mtcars$mpg,
+        main = "Boxplot of Miles per Gallon",
+        xlab = "MPG",
+        ylab = "Observation"
+        )
+```
+:::
+::::::
+
+
+# Boxplots - `ggpubr`
+
+:::::: {.columns}
+::: {.column}
+Main Function Call:
+```{r echo=TRUE, eval=FALSE}
+ggboxplot(mtcars, "am", "mpg")
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggboxplot(mtcars, 
+          "am",
+          "mpg", 
+          title = "Boxplot of Fuel Economy by Transmission Type", 
+          xlab = "Engine Transmission Type", 
+          ylab = "Miles per Gallon" 
+          )
+```
+:::
+::::::
+
+# Histograms - `base`
+
+:::::: {.columns}
+::: {.column}
+Main Function Call:
+```{r echo=TRUE, eval=FALSE}
+hist(mtcars$mpg)
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+hist(mtcars$mpg, 
+     main = "Histogram of mtcars MPG", 
+     xlab = "Reported Miles per Gallon"
+     )
+```
+:::
+::::::
+
+# Bar Charts - `ggplot2`
+
+:::::: {.columns}
+::: {.column}
+Main Function Call:
+```{r echo=TRUE, eval=FALSE}
+ggplot(mtcars, mapping = aes(x = as.factor(cyl))) + 
+  geom_bar()
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(mtcars, mapping = aes(x = as.factor(cyl))) + 
+  geom_bar() +
+  labs(x = "Engine Cylinders", 
+       y = "Number of Automobiles Recorded", 
+       title = "Cylinders in Automobile Engines", # The Bolded Graph Title
+       subtitle = "Bar Chart of the Engine Atributes of Vehicles Sampled" # The Graph Subtitle
+      ) +
+  # scale_y_continuous(labels = comma) +
+  # scale_x_continuous(labels = comma) +
+        theme(plot.title = element_text(hjust = 0.5), # centers the title
+              plot.subtitle = element_text(hjust = 0.5), # centers the subtitle
+              panel.background = element_blank(), # Removes greyscale background
+              axis.line = element_line() # Adds black line border to x and y axis
+      )
+```
+:::
+::::::
+
+# Bar Charts, Sorted - `ggplot2`
+
+:::::: {.columns}
+::: {.column}
+Main Function Call:
+```{r echo=TRUE, eval=FALSE}
+
+ggplot(mtcars[mtcars$cyl %in% c(4, 6),], 
+       mapping = aes(x = as.factor(cyl))) + 
+  geom_bar()
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(mtcars[mtcars$cyl %in% c(4, 6),], 
+       mapping = aes(x = as.factor(cyl))) + 
+  geom_bar() +
+  labs(x = "Engine Cylinders", 
+       y = "Number of Automobiles Recorded", 
+       title = "Cylinders in Automobile Engines", # The Bolded Graph Title
+       subtitle = "Bar Chart of the Engine Atributes of 4 and 6 Cylinder Engines" # The Graph Subtitle
+      ) +
+  # scale_y_continuous(labels = comma) +
+  # scale_x_continuous(labels = comma) +
+        theme(plot.title = element_text(hjust = 0.5), # centers the title
+              plot.subtitle = element_text(hjust = 0.5), # centers the subtitle
+              panel.background = element_blank(), # Removes greyscale background
+              axis.line = element_line() # Adds black line border to x and y axis
+      )
+```
+:::
+::::::
+
+# Saving Graphics - `base`
+
+:::::: {.columns}
+::: {.column}
+"Headless" method, without any graphical output
+```{r echo=TRUE, eval=FALSE}
+jpeg("mtcars-hpXmpg.jpg")
+plot(mtcars$hp~mtcars$mpg)
+dev.off()
+```
+:::
+
+::: {.column}
+Desktop method, with graphical output
+```{r echo=TRUE, eval=FALSE}
+plot(mtcars$hp~mtcars$mpg)
+dev.copy(png, "mtcars-hpXmpg.jpg")
+dev.off()
+```
+:::
+::::::
+
+# Saving Graphics - `ggplot2`
+
+:::::: {.columns}
+::: {.column}
+"Headless" method, without any graphical output
+```{r echo=TRUE, eval=FALSE}
+ggsave("scatterplot-hpXmpg.png", 
+       ggplot(mtcars, mapping = aes(x = hp, y = mpg)) + geom_point()
+       )
+```
+:::
+
+::: {.column}
+Desktop method, with graphical output
+```{r echo=TRUE, eval=FALSE}
+ggplot(mtcars, mapping = aes(x = hp, y = mpg)) + geom_point()
+ggsave("scatterplot-hpXmpg.png")
+```
+:::
+::::::
+
+# Goals
+
+By the end of the Presentation, we will have learned:
+
+- How to organize data for ease of graphing
+- How to generate graphs for descriptive statistics
+- How to add additional detail to graphs
+- How to save and export graphics

@@ -52,34 +52,28 @@ pk = c(
   ### Packages for Development and Github Installs ----
   'devtools',
   
-  ### Packages for Multi Core Processing ----
-  'parallel',
-  'foreach',
-  'doParallel',
-  
   ### Packages for creation of additional graphics or statistical tests ----
-  # Loaded first, as future tests will dominate namesspaces
   'psych', # Social Science Statistics Package
-  'ggpubr', # Publication support for ggplot2
   'ggplot2', # Graphics workhorse
+  'ggpubr', # Publication support for ggplot2
   'scales', # Support for scale text in ggplot2
   'wordcloud', # Word Clouds
   'corrplot', # Correlation Plots
-  # 'ggbiplot', # Git Package, below
+  # 'ggbiplot', # Git Package, below, used for PCA
   'multcomp', # Multiple Comparisons
   'UsingR', # linear modeling support
   'gplots', # Legacy stats plots
   'tmap', # Choropleth Mapping
-  'plotly', # Interactive graphics
+  'plotly', # Interactive graphics using js library
   
   ### Packages for reading from and writing to .dbf; xls, xlsx, ; shape file, file formats ----
-  'yaml',
-  'foreign',
-  'shapefiles',
-  'openxlsx',
-  'readr',
-  'sf',
-  'sp',
+  'yaml', # yaml format reader
+  'foreign', # SPSS, SAS, .dbf read support
+  'shapefiles', # ESRI shape file format reader
+  'openxlsx', # open and write excel files
+  'readr', # read additional data into R
+  'sf', # Support for Shape files
+  'sp', # Support for Shape files
   
   ### Packages for sorting, filtering, manipulating, Data and Data Frames ----
   'plyr',
@@ -91,24 +85,24 @@ pk = c(
   'stringr',
   
   ### Packages for API and WWW interfaces, web scraping ----
-  'httr',
-  'jsonlite',
-  'xml2',
+  'httr', # http reading
+  'jsonlite', # JSON file parsing
+  'xml2', # xml reading, for APIs
   'rvest',
-  'tidycensus',
-  'RCurl',
+  'tidycensus', # Support for accessing the US Census Data
+  'RCurl', # Web Page Get Requests
   'rsconnect',
-  'qrcode',
+  'qrcode', # Generate QR codes
   
   ### Packages for report generation ----
-  'kableExtra',
-  'knitr',
-  'rmarkdown',
+  'kableExtra', # Tables
+  'knitr', # Document rendering
+  'rmarkdown', # R Markdown document rendering
   'report',
-  'bookdown',
-  'shiny',
-  'flexdashboard',
-  'DiagrammeR'
+  'bookdown', # Book rendering, specifically the R Lab Web Pages
+  'shiny', # Interactive Web App Package, for dashboarding
+  'flexdashboard', # Uninteractive Web Dashboarding
+  'DiagrammeR' # Suppor for making GraphViz flow charts
   
 )
 

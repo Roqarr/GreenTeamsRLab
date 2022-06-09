@@ -1,0 +1,569 @@
+---
+# Green_Teams ----
+# Written by Chris Snyder, MPH (Roqarr)
+# Written for the Montclair State University PSEG Institute for Sustainability Studies
+# Documentation ----
+# This is the RMD script for powerpoint document generation
+# Arguments ----
+# Defines the parameters to pass into the Rmd document for knitting.
+# Parameters allow you to pass arguments into the Rmd document, similar to a function, to create dynamic reports.
+# Similar to a function, you must define the parameters at the beginning of the report, and can assign default values.
+# These parameters can be accessed inside the Rmd document using a special environment object: 'params'
+# The 'params' object is a special read-only environment object.
+# Each of the parameters lsited below, can be accesed as vectors of 'params', using `params$value`
+params:
+ state: "New Jersey"
+ university: "Montclair State University"
+ program: "Green Teams"
+# Returns ----
+# na
+
+# The Title of the Document. Accepts Multiple Lines and Images, when preceeded by the '|', the pipe character.
+# By default, this is centered. 
+title: | 
+   Statistical Tests with R
+    
+ 
+# The Subtitle of the Document. Accepts Multiple Lines and Images, when preceeded by the '|', the pipe character.
+subtitle: |
+ How to run and interpret    
+ Statistical Tests in R
+
+# The List of Authors, separated by a new line and preceeded by a '-' and a space
+# Authors will be placed on a line, and automatically centered
+# Notes about the authors, as footnotes, can be added with '^[]', with the contents of the footnote placed inside of the brackets.
+author: 
+  - Chris Snyder, MPH
+
+# Date; Use Pipe to allow multiple lines or inline R code.
+# R code can be accepted in most arguments using the backtick / backquote character '`' (located above the tab key).
+# This example will use an R function to pull the current date, and add it to the document as the entry for the date.
+# You could alternatively write in text for a fixed Year, Semester, Quarter, etc.
+date: |
+  Green Teams, 
+  `r format(Sys.Date(), "%Y")`
+
+# The abstract block of text, located below the authors / date
+# abstract: |
+#  Here is placeholder abstract Text.
+#  It can have multiple lines, and should be limited to a brief description of the paper, if you choose to add one.
+
+# Table of Contents Settings
+# Do you want to add a Table of Contents? True or False
+toc: True
+# The Defined Title of the Table of Contents
+# You can specify a title for the Table of Contents here. The example asserts that the toc is called 'Table of Contents'.
+toc-title: "Table of Contents"
+# The Defined depth of headers to include in the Table of Contents. 
+# This value impacts the TOC and Sidebar Navigation in PDF views.
+# Provide a number of how many headings / subheadings you want to have presented in the Table of Contents.
+# This example will show Headings (1) and Sub-Headings (2), but will not display any section headings at 3 or below.
+toc-depth: 2
+# Do you want to add a Table of Figures? True or False
+# This will add a separate table, listing all of the defined figures. 
+# Recommended to keep False
+lof: False 
+# Do you want to add a Table of Tables? True or False
+# This will add a separate table, listing all of the defined tables. 
+# Recommended to keep False
+lot: False 
+
+# Defines the output file format of the document that will be made by this Rmd file.
+# This example provides the three most common document types: PDF, Word, and Web (HTML).
+# There are additional potential formats for presentations, powerpoints, etc.
+# This example is formatted for a PDF output. 
+# Please note, the document format may impact what code or outputs can be accepted inside the Rmd file.
+# output: powerpoint_presentation
+# The Reference Document is provided
+output: 
+  powerpoint_presentation:
+    reference_doc: Parallax_Blue.pptx
+
+# output: pdf_document
+# output: word_document
+# output: html_document
+
+header-includes:
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{wrapfig}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{tabu}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+  - \usepackage{xcolor}
+
+---
+
+# Goals
+
+By the end of the Presentation, we will have learned:
+
+- How to pick a statistical test for your data
+- How to run statistical tests in R
+- How to interpret the results of statistical tests
+
+# Picking the Right Test
+
+# Correlation - Motivation
+
+The Pearson's product moment correlation test is used for testing for association between paired samples. 
+The correlation test in R accepts two numeric vectors. Use cases for a correlation test include:
+
+- Observational studies
+- Natural experiments
+- Single point of measurement
+
+# T Test - Motivation
+
+The Two Sample T Test is used to compare the observed means across two different groups. 
+T tests in R require either two numeric vectors, or one numeric and one categorical vector.
+Use cases for a t test include:
+
+- Case / Control testing
+- Pre / Post testing
+- Case against known or hypothesized value
+
+# Chi-Square - Motivation
+
+The Chi-Square test is used to compare categorical values, as row by column tables.
+The Chi-Square test in R requires two categorical values, or two values that can be coerced to a factor.
+Use cases for a Chi-Squared test include:
+
+- Compare Population Proportions
+- Test for independence
+
+# Linear Model - Motivation
+
+The linear model describes a linear relationship between two or more variables, and may predict what values of one variable, Y, correspond to the values of another, X.
+Linear models in R require one numeric response variable, and at least one response variable, which is treated as categorical.
+Use cases for a linear model include:
+
+- Identifying linear relationships
+- Predicting unobserved outcomes of linear relationships based on rate of change
+
+# ANOVA - Motivation
+
+The ANOVA Test is used to compare the observed means across three or more different groups. 
+ANOVA tests in R require one numeric vector and one categorical vector.
+Use cases for an ANOVA test:
+
+- Case / Case / Control testing
+- Pre / Mid / Post testing
+- Differences across multiple observed categorical groups
+
+# Statistics Lab
+
+# Example Data Set `mtcars`
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# This chunk uses some examples from the mtcars dataset. 
+# This dataset is pre-loaded into R, and is commonly used as an example data set for statistical tests and graphing.
+# However, this data frame has the row names assigned as the make and model of the automobile, as we will see in the Table section below.
+# This code will create a new data frame, removing the row names, and will add a vector of those names instead, which we can work with much easier.
+kmtcars = mtcars # Make a copy of mtcars to process
+kmtcars$model = rownames(mtcars) # Add a vector of data
+rownames(kmtcars) = NULL
+kmtcars = kmtcars %>% select(model, everything())
+
+# Subset the data frame, choosing only the following columns.
+# The example below includes both the functional and piped forms of this code, which behave the same.
+
+# Functional Example
+skmtcars = select(kmtcars,
+                  model, 
+                  mpg,
+                  cyl,
+                  disp,
+                  hp
+                  )
+
+# Order the data frame in decreasing order of MPG
+# Assign the order of the data frame to be in descending order of MPG. 
+# In case of a tie, the first column value is used as a tie-breaker (i.e., is sorted alphabetically).
+skmtcars = skmtcars[order(skmtcars$mpg, decreasing = T),] 
+skmtcars = skmtcars[skmtcars$cyl==4,] # Subset the data frame, to only include
+skmtcars = head(skmtcars)
+rownames(skmtcars) = NULL # Reset the row numbers, otherwise, they will appear as a new column in our table.
+
+kbl(skmtcars, # The data frame to print
+  booktabs = T, # Use the booktabs package, loaded in the YAML section. This is generally recommended.
+  escape = F, # This time the escape is F, because we want to process some escape characters; i.e., the '\n' used in our line breaks for our multi-row column names.
+  longtable = T, # Use the longtable package, loaded in the YAML section. This supports tables that are long, supports tables that can wrap across pages. It also centers the table on the page. This is generally recommended.
+  format = "pipe", # The document format. For this example, it is a pdf document, which uses LaTeX to render, so our format is latex.
+  linesep = "", # A separator to include after each line / a set of lines. The default value puts a space every 5 items. This removes the space.
+  col.names = linebreak(c("Make and Model", 
+                          "Miles per Gallon",
+                          "Number of Cylinders",
+                          "Displacement in Cubic Inches",
+                          "Gross Horsepower"
+                          ),
+                        align = c("l", 
+                                  "c",
+                                  "c",
+                                  "c",
+                                  "c"
+                                  )
+                        ),
+  align = c("l",
+            "c",
+            "c",
+            "c",
+            "c",
+            "c"
+            ), caption = "Top Six Fuel Efficient  4-Cylinder Engines"
+  )
+
+
+# kable(mtcars, format = "pipe")
+
+```
+
+
+
+
+# Correlation
+
+:::::: {.columns}
+::: {.column}
+```{r echo=TRUE, eval=FALSE}
+cor.test(mtcars$hp, mtcars$mpg)
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+res = cor.test(mtcars$hp, mtcars$mpg)
+# res$p.value
+# res$estimate
+```
+This is a correlation test between horsepower and miles per gallon, from the `mtcars` data set. From this test, we see:
+
+- p = `r res$p.value`
+- cor = `r res$estimate`
+
+We can determine that there is a significant and strong negative correlation between horsepower and fuel economy.
+
+:::
+::::::
+
+
+
+# Two Sample T Test -  X by Y
+
+:::::: {.columns}
+::: {.column}
+```{r echo=TRUE, eval=FALSE}
+t.test(mtcars$mpg ~ mtcars$am)
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+res = t.test(mtcars$mpg ~ mtcars$am)
+# res$p.value
+# res$estimate[1]
+```
+This is a t test comparing mean miles per gallon across cars grouped by transmission type, from the `mtcars` data set. From this test, we see:
+
+- p = `r res$p.value`
+- mean of a = `r res$estimate[1]`
+- mean of m = `r res$estimate[2]`
+
+We can determine that there is a significant difference between the mean mpg of cars, based on transmission type.
+
+:::
+::::::
+
+
+# Two Sample T Test -  X and Y
+
+:::::: {.columns}
+::: {.column}
+```{r echo=TRUE, eval=FALSE}
+t.test(mtcars$mpg[mtcars$am==0], mtcars$mpg[mtcars$am==1])
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+res = t.test(mtcars$mpg[mtcars$am==0], mtcars$mpg[mtcars$am==1])
+# res$p.value
+# res$estimate
+```
+This is a t test comparing mean miles per gallon across cars grouped by transmission type, from the `mtcars` data set. From this test, we see:
+
+- p = `r res$p.value`
+- mean of a = `r res$estimate[1]`
+- mean of m = `r res$estimate[2]`
+
+We can determine that there is a significant difference between the mean mpg of cars, based on transmission type.
+
+:::
+::::::
+
+# One Sample T Test -  X and estimated Y
+
+:::::: {.columns}
+::: {.column}
+```{r echo=TRUE, eval=FALSE}
+t.test(mtcars$mpg, mu = 20)
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+res = t.test(mtcars$mpg, mu = 20)
+# res$p.value
+# res$estimate
+# res$null.value
+```
+This is a t test comparing mean miles per gallon, from the `mtcars` data set, compared to an estimated population mean. From this test, we see:
+
+- p = `r res$p.value`
+- mean = `r res$estimate`
+- mu (estimate) = `r res$null.value`
+
+We can determine that there is not a significant difference between the mean mpg of cars, and our hypothesized mean.
+
+:::
+::::::
+
+
+# Chi-Square - Table Data
+
+:::::: {.columns}
+::: {.column}
+```{r echo=TRUE, eval=TRUE, comment=""}
+table(mtcars$cyl, mtcars$am)
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+res = chisq.test(mtcars$cyl, mtcars$am)
+# res$p.value
+# res$estimate[1]
+```
+This is a row by column table, used to evaluate the chi-squared test.
+This table compares engine cylinders across cars grouped by transmission type, from the `mtcars` data set. 
+For this Chi-Square test, we are testing the independence of the two observed factors.
+From this test, we should note:
+
+- not every cell has at least 5 observations
+- our test approximation may be incorrect as a result
+
+:::
+::::::
+
+
+# Chi-Square -  X and Y
+
+:::::: {.columns}
+::: {.column}
+```{r echo=TRUE, eval=FALSE}
+chisq.test(mtcars$cyl, mtcars$am)
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+res = chisq.test(mtcars$cyl, mtcars$am)
+# res$p.value
+# res$estimate[1]
+```
+This is a chi-squared test comparing engine cylinders across cars grouped by transmission type, from the `mtcars` data set. This test was conducted using vectors. From this test, we see:
+
+- p = `r res$p.value`
+
+We can determine that there is a significant difference between the distribution of cylinders across cars grouped by transmission type. We should reference the table to determine the differences.
+
+:::
+::::::
+
+# Chi-Square -  Table
+
+:::::: {.columns}
+::: {.column}
+```{r echo=TRUE, eval=FALSE}
+chitab = table(mtcars$cyl, mtcars$am)
+chisq.test(chitab)
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+chitab = table(mtcars$cyl, mtcars$am)
+res = chisq.test(chitab)
+# res$p.value
+# res$estimate[1]
+```
+This is a chi-squared test comparing engine cylinders across cars grouped by transmission type, from the `mtcars` data set. This test was conducted using a table. From this test, we see:
+
+- p = `r res$p.value`
+
+We can determine that there is a significant difference between the distribution of cylinders across cars grouped by transmission type. We should reference the table to determine the differences.
+
+:::
+::::::
+
+
+
+# Linear Model -  Y by X
+
+:::::: {.columns}
+::: {.column}
+```{r echo=TRUE, eval=FALSE}
+summary(lm(mtcars$mpg ~ mtcars$hp))
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+res = summary(lm(mtcars$mpg ~ mtcars$hp))
+# as.data.frame(res$coefficients)$'Pr(>|t|)'[2] # Slope P Value, Beta1
+# as.data.frame(res$coefficients)$Estimate[2] # Slope Estimate, Beta1
+```
+This is a linear model of how horsepower predicts miles per gallon, from the `mtcars` data set. From this test, we see:
+
+- B0 Estimate = `r as.data.frame(res$coefficients)$Estimate[1]`
+- B1 Estimate = `r as.data.frame(res$coefficients)$Estimate[2]`
+- B1 p = `r as.data.frame(res$coefficients)$'Pr(>|t|)'[2]`
+- Adj R Square = `r res$adj.r.squared`
+
+We can determine that there is a significant negative linear relationship between fuel economy and engine horsepower. This model accounts for `r f_percent(res$adj.r.squared*100)` of the observed change.
+
+:::
+::::::
+
+# Linear Model -  Y by X + X
+
+:::::: {.columns}
+::: {.column}
+```{r echo=TRUE, eval=FALSE}
+summary(lm(mtcars$mpg ~ mtcars$hp + mtcars$wt))
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+res = summary(lm(mtcars$mpg ~ mtcars$hp + mtcars$wt))
+# as.data.frame(res$coefficients)$'Pr(>|t|)'[2] # Slope P Value, Beta1
+# as.data.frame(res$coefficients)$Estimate[2] # Slope Estimate, Beta1
+```
+<!-- This is a linear model of how horsepower predicts miles per gallon, from the `mtcars` data set. From this test, we see: -->
+
+- B0 Estimate = `r as.data.frame(res$coefficients)$Estimate[1]`
+- B1 Estimate = `r as.data.frame(res$coefficients)$Estimate[2]`
+- B2 Estimate = `r as.data.frame(res$coefficients)$Estimate[3]`
+- B1 p = `r as.data.frame(res$coefficients)$'Pr(>|t|)'[2]`
+- B2 p = `r as.data.frame(res$coefficients)$'Pr(>|t|)'[3]`
+- Adj R Square = `r res$adj.r.squared`
+
+We can determine that there is a significant negative linear relationship between fuel economy and engine horsepower + vehicle weight. This model accounts for `r f_percent(res$adj.r.squared*100)` of the observed change.
+
+:::
+::::::
+
+# Linear Model -  Y by X + X + X:X
+
+:::::: {.columns}
+::: {.column}
+```{r echo=TRUE, eval=FALSE}
+summary(lm(mtcars$mpg ~ mtcars$hp * mtcars$wt))
+
+summary(lm(mtcars$mpg ~ mtcars$hp + mtcars$wt + mtcars$hp:mtcars$wt))
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+res = summary(lm(mtcars$mpg ~ mtcars$hp * mtcars$wt))
+# as.data.frame(res$coefficients)$'Pr(>|t|)'[2] # Slope P Value, Beta1
+# as.data.frame(res$coefficients)$Estimate[2] # Slope Estimate, Beta1
+```
+<!-- This is a linear model of how horsepower predicts miles per gallon, from the `mtcars` data set. From this test, we see: -->
+
+- B0 Estimate = `r as.data.frame(res$coefficients)$Estimate[1]`
+- B1 Estimate = `r as.data.frame(res$coefficients)$Estimate[2]`
+- B2 Estimate = `r as.data.frame(res$coefficients)$Estimate[3]`
+- B1:B2 Estimate = `r as.data.frame(res$coefficients)$Estimate[4]`
+- B1 p = `r as.data.frame(res$coefficients)$'Pr(>|t|)'[2]`
+- B2 p = `r as.data.frame(res$coefficients)$'Pr(>|t|)'[3]`
+- B1:B2 p = `r as.data.frame(res$coefficients)$'Pr(>|t|)'[4]`
+- Adj R Square = `r res$adj.r.squared`
+
+We can determine that there is a significant negative linear relationship between fuel economy and engine horsepower + vehicle weight + interaction. This model accounts for `r f_percent(res$adj.r.squared*100)` of the observed change.
+
+:::
+::::::
+
+
+
+# ANOVA -  X by Y
+
+:::::: {.columns}
+::: {.column}
+```{r echo=TRUE, eval=FALSE}
+summary(aov(mtcars$mpg~as.factor(mtcars$cyl)))
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+res = summary(aov(mtcars$mpg~as.factor(mtcars$cyl)))
+res$p.value = res[[1]]$`Pr(>F)`[1]
+# res$estimate[1]
+```
+This is an ANOVA test comparing mean miles per gallon across cars grouped by number of engine cylinders, from the `mtcars` data set. From this test, we see:
+
+- p = `r res$p.value`
+
+We can determine that there is a significant difference between the mean mpg of cars, based on number of engine cylinders. We do not yet know which groups are different.
+
+:::
+::::::
+
+# ANOVA -  Multiple Comparisons
+
+:::::: {.columns}
+::: {.column}
+```{r echo=TRUE, eval=FALSE}
+TukeyHSD(aov(mtcars$mpg~as.factor(mtcars$cyl)))
+```
+:::
+
+::: {.column}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+res = TukeyHSD(aov(mtcars$mpg~as.factor(mtcars$cyl)))
+res = as.data.frame(res$`as.factor(mtcars$cyl)`)
+names(res) = c("diff", "lwr", "upr", "padj")
+res$groups = rownames(res)
+
+```
+This is a Tukey multiple comparisons test comparing the differences between observed groups from our significant ANOVA test. From this test, we see:
+
+- P: `r res$groups[1]` = `r res$padj[1]`
+- P: `r res$groups[2]` = `r res$padj[2]`
+- P: `r res$groups[3]` = `r res$padj[3]`
+
+We can determine that there is a significant difference between the mean mpg of cars, based on number of engine cylinders, across all observed groups.
+
+:::
+::::::
+
+
+
+# Goals
+
+At the end of the Presentation, we have learned:
+
+- How to pick a statistical test for your data
+- How to run statistical tests in R
+- How to interpret the results of statistical tests

@@ -13,7 +13,7 @@ bookdown::gitbook:
         <li><a href="./index.html">Green Teams<br>R Lab</a></li>
         
       after: |
-        <li><a href="https://www.montclair.edu/pseg-sustainability-institute/"><img src="./msu.png" alt="MSU Logo"></a></li>
+        <li><a href="https://www.montclair.edu/pseg-sustainability-institute/"><img src="./psegiss.jpg" width=100% alt="MSU Logo"></a></li>
     toolbar:
       position: fixed
     edit : null

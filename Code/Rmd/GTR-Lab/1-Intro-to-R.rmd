@@ -1,3 +1,35 @@
+# Download R {#download}
+
+The following page details instructions on how to download and install R and it's IDE, RStudio. These software will help inform your research projects throughout the summer internship program.
+
+## Download and Install R
+
+R is a free software environment for statistical computing and graphics. It compiles and runs on a wide variety of UNIX platforms, Windows and MacOS. 
+It is a powerful tool for performing statistical analysis, graphing, GIS, and report creation.
+
+Download R from the Comprehensive R Archive Network (CRAN) at:
+
+https://cloud.r-project.org/
+
+Please note:
+
+- Windows users will download an executable installer (.exe)
+- Mac users will download a package installer (.pkg)
+- Linux users have access via package management systems
+- R must be installed before RStudio
+
+## Download and Install RStudio
+
+Download RStudio Desktop from the RStudio team at:
+
+https://www.rstudio.com/products/rstudio/download/#download
+
+Please note:
+
+- Windows users will download an executable installer (.exe)
+- Mac users will download a disk image file (.dmg)
+- Linux users will download a package file (.deb, .rpm)
+
 # Introduction to R {#intro}
 
 ## Goals
@@ -274,15 +306,36 @@ We can create Power Point presentations, web pages and dashboards, books, pdfs, 
 
 This is the first guided lab section, and will act as a quick introduction to how to begin using R and its Interactive Development Environment (IDE) RStudio.
 
-Launch RStudio now if you have not done so already. You should see a screen similar to the one below.
+## The R Console
 
-![](./Assets/Images/RStudioTerm.png)
+![R Console Inside Terminal Session](./Assets/Images/RTerm.png)
+
+R is run inside of your computer's terminal, and can be accessed interactively via command line interface, or passively via scripting.
+R is launched via the `R.exe` application on Windows, or through the terminal via `R`, as a variable in your `PATH`. The R console can be used as an interactive session, or be used for scripting by more experienced users.
+
+R commands are run interactively in the console line-by-line, or by writing and executing an R source file (.R file).
+
+The R Console is a powerful tool, and a prerequisite for RStudio. You will rarely need to use the R console outside of RStudio, as the IDE provides you with easier access to the R Console.
 
 
+## RStudio
 
+![RStudio](./Assets/Images/RStudioTerm.png)
+
+
+RStudio is run as a desktop application, which acts as an easier way to interact with the R console. 
+RStudio provides the following features in its multi-panel layout:
+
+- a file and graphics viewer (on the bottom right pane by default), 
+- an environment viewer to keep track of data and variables used by the R session (on the top right pane by default),
+- access to the R console (on the bottom left pane by default), and
+- access to a document editor with syntax-highlighting (on the top left pane by default).
+
+RStudio allows for a much easier experience running R commands interactively in the console line-by-line, or writing and executing an R source file (.R file).
+
+Launch RStudio now if you have not done so already. You should see a screen similar to the one above. You will be able to follow along with the examples provided in this lab session.
 
 ## Run and Source R Code
-
 
 Running R Code is the process of giving instructions to R one line (one complete instruction) at a time.
 
@@ -567,6 +620,36 @@ ggscatter(mtcars,
               axis.line = element_line() # Adds black line border to x and y axis
       )
 ```
+
+## Statistical Analysis and Tests
+
+The main strength of R is in the ability to quickly perform statistical analysis on our data, and generate summary or descriptive statistics.
+We can use the `table()` function to make a contingency table to quickly count the number of responses in our data.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# Make a table of responses.
+# This will count the number of times each response was selected.
+# In this case, we can quickly count how many cars were sampled from each engine type.
+table(mtcars$cyl)
+
+```
+
+We can also generate descriptive statistics about data using another package, `Hmisc`.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# Install the prerequisite package
+install.packages("Hmisc")
+```
+
+The `describe()` function will generate descriptive statistics about data that we have collected.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=FALSE}
+# Load the prerequisite library
+library(Hmisc)
+describe(mtcars$cyl)
+
+```
+
 
 
 ## Goals
